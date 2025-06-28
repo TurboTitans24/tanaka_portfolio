@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TANAKA | CYBER SERVICES</title>
+    <style>
+        /* === NEO-TYOKYO BASE STYLING === */
+        :root {
+            --matrix-green: #00ff41;
+            --cyber-purple: #bc13fe;
+            --hacker-red: #ff073a;
+            --terminal-blue: #0af;
+            --bg-dark: #0d0208;
+            --grid-alpha: 0.15;
+        }
+        
+        @font-face {
+            font-family: 'Rajdhani';
+            src: url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
+        }
+        
+        body {
+            background-color: var(--bg-dark);
+            color: var(--matrix-green);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            overflow-x: hidden;
+            perspective: 1000px;
+        }
+
+        /* === HOLOGRAPHIC GRID FLOOR === */
+        .grid-floor {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, var(--grid-alpha)) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, var(--grid-alpha)) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(75deg) translateZ(-100px);
+            z-index: -2;
+            animation: gridScroll 20s linear infinite;
+        }
+
+        /* === PULSING NEON BARS === */
+        .neon-bars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                linear-gradient(90deg, 
+                    transparent 0%, 
+                    rgba(0, 255, 65, 0.03) 50%, 
+                    transparent 100%);
+            animation: pulseBar 8s ease infinite;
+        }
+
+        /* === MAIN CONTAINER === */
+        .cyber-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            position: relative;
+        }
+
+        /* === NAVIGATION BUTTON === */
+        .nav-terminal {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .terminal-button {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 10px 20px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+            display: flex;
+            align-items: center;
+        }
+
+        .terminal-button:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 20px var(--matrix-green);
+            letter-spacing: 3px;
+        }
+
+        .terminal-button::before {
+            content: '>> ';
+        }
+
+        /* === HOLO HEADER === */
+        .holo-header {
+            text-align: center;
+            margin: 80px 0;
+            position: relative;
+        }
+
+        .holo-title {
+            font-size: 4.5rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            margin: 0;
+            color: transparent;
+            background: linear-gradient(
+                45deg,
+                var(--matrix-green),
+                var(--terminal-blue),
+                var(--cyber-purple)
+            );
+            -webkit-background-clip: text;
+            background-clip: text;
+            text-shadow: 
+                0 0 10px rgba(0, 255, 65, 0.3),
+                0 0 20px rgba(0, 255, 65, 0.2);
+            position: relative;
+            z-index: 10;
+            animation: holoPulse 6s infinite alternate;
+        }
+
+        .holo-subtitle {
+            font-size: 1.5rem;
+            letter-spacing: 0.3rem;
+            margin-top: -10px;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            position: relative;
+            display: inline-block;
+        }
+
+        .holo-subtitle::before,
+        .holo-subtitle::after {
+            content: '//';
+            margin: 0 15px;
+            color: var(--hacker-red);
+        }
+
+        /* === SERVICE MATRIX === */
+        .service-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 80px 0;
+        }
+
+        .service-card {
+            background: rgba(13, 2, 8, 0.7);
+            border: 1px solid var(--matrix-green);
+            border-radius: 5px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 
+                0 0 10px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 255, 65, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 45%,
+                rgba(0, 255, 65, 0.1) 50%,
+                transparent 55%
+            );
+            transform: rotate(30deg);
+            animation: shine 6s infinite;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 
+                0 15px 30px rgba(0, 255, 65, 0.4),
+                inset 0 0 30px rgba(0, 255, 65, 0.2);
+            border-color: var(--cyber-purple);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--matrix-green);
+            text-shadow: 0 0 10px var(--matrix-green);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            color: var(--cyber-purple);
+            text-shadow: 0 0 15px var(--cyber-purple);
+            transform: scale(1.2);
+        }
+
+        .service-title {
+            font-size: 1.8rem;
+            margin: 0 0 15px;
+            color: var(--matrix-green);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .service-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--matrix-green);
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-title::after {
+            width: 100%;
+            background: var(--cyber-purple);
+        }
+
+        .service-desc {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .tech-tag {
+            background: rgba(188, 19, 254, 0.2);
+            border-color: var(--cyber-purple);
+            color: white;
+        }
+
+        /* === SKILL ORBS === */
+        .skill-orbs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 80px 0;
+        }
+
+        .orb-container {
+            width: 180px;
+            height: 180px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .orb {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle at 30% 30%,
+                rgba(0, 255, 65, 0.8),
+                rgba(0, 20, 8, 0.9)
+            );
+            box-shadow: 
+                0 0 30px var(--matrix-green),
+                inset 0 0 20px rgba(0, 255, 65, 0.5);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: white;
+            text-shadow: 0 0 10px var(--matrix-green);
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .orb::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                transparent 45%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 55%
+            );
+            transform: rotate(30deg);
+            animation: shine 6s infinite;
+        }
+
+        .orb:hover {
+            transform: scale(1.1);
+            box-shadow: 
+                0 0 50px var(--cyber-purple),
+                inset 0 0 30px rgba(188, 19, 254, 0.7);
+            background: radial-gradient(
+                circle at 30% 30%,
+                rgba(188, 19, 254, 0.8),
+                rgba(0, 20, 8, 0.9)
+            );
+        }
+
+        /* === DATA STREAM FOOTER === */
+        .data-stream {
+            position: relative;
+            height: 300px;
+            margin-top: 120px;
+            overflow: hidden;
+            border-top: 1px solid var(--matrix-green);
+            border-bottom: 1px solid var(--hacker-red);
+        }
+
+        .stream-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .stream-column {
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                var(--matrix-green),
+                transparent
+            );
+            position: relative;
+            opacity: 0.7;
+        }
+
+        .stream-bit {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: var(--matrix-green);
+            border-radius: 50%;
+            animation: streamFlow linear infinite;
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        .cyber-cta {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .cta-text {
+            font-size: 2.5rem;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.3rem;
+            color: white;
+            text-shadow: 
+                0 0 10px var(--matrix-green),
+                0 0 20px var(--cyber-purple);
+            margin-bottom: 30px;
+            animation: ctaPulse 3s infinite alternate;
+        }
+
+        .cta-button {
+            background: transparent;
+            border: 2px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.2rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .cta-button:hover {
+            background: rgba(0, 255, 65, 0.1);
+            box-shadow: 0 0 30px var(--matrix-green);
+            letter-spacing: 0.3rem;
+            padding: 15px 35px;
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 65, 0.3),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        /* === CYBER MODAL === */
+        .cyber-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 1, 10, 0.95);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .cyber-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .cyber-terminal {
+            width: 90%;
+            max-width: 800px;
+            height: 70vh;
+            background: rgba(10, 2, 15, 0.9);
+            border: 1px solid var(--matrix-green);
+            border-radius: 5px;
+            box-shadow: 
+                0 0 30px var(--matrix-green),
+                inset 0 0 20px rgba(0, 255, 65, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-header {
+            padding: 15px 20px;
+            background: rgba(0, 20, 8, 0.5);
+            border-bottom: 1px solid var(--matrix-green);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .terminal-title {
+            color: var(--matrix-green);
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .terminal-close {
+            background: transparent;
+            border: none;
+            color: var(--hacker-red);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .terminal-close:hover {
+            text-shadow: 0 0 10px var(--hacker-red);
+            transform: scale(1.2);
+        }
+
+        .terminal-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .terminal-body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0, 255, 65, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .command-line {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .prompt {
+            color: var(--matrix-green);
+            margin-right: 10px;
+        }
+
+        .command-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid var(--matrix-green);
+            color: var(--matrix-green);
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            flex: 1;
+            padding: 5px;
+            outline: none;
+        }
+
+        .command-input:focus {
+            border-bottom-color: var(--cyber-purple);
+        }
+
+        .terminal-output {
+            margin-bottom: 20px;
+        }
+
+        .output-line {
+            margin: 5px 0;
+            animation: typeIn 0.1s forwards;
+            opacity: 0;
+        }
+
+        @keyframes typeIn {
+            to { opacity: 1; }
+        }
+
+        .success {
+            color: var(--matrix-green);
+        }
+
+        .error {
+            color: var(--hacker-red);
+        }
+
+        .info {
+            color: var(--terminal-blue);
+        }
+
+        .highlight {
+            color: var(--cyber-purple);
+        }
+
+        .cyber-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: -1;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes gridScroll {
+            0% { transform: rotateX(75deg) translateZ(-100px) translateY(0); }
+            100% { transform: rotateX(75deg) translateZ(-100px) translateY(-50px); }
+        }
+
+        @keyframes pulseBar {
+            0% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 0.1; }
+        }
+
+        @keyframes holoPulse {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes streamFlow {
+            0% { top: -50px; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 100%; opacity: 0; }
+        }
+
+        @keyframes ctaPulse {
+            0% { transform: scale(1); text-shadow: 0 0 10px var(--matrix-green), 0 0 20px var(--cyber-purple); }
+            100% { transform: scale(1.05); text-shadow: 0 0 15px var(--matrix-green), 0 0 30px var(--cyber-purple); }
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; }
+        }
+
+        /* === RESPONSIVE ADJUSTMENTS === */
+        @media (max-width: 768px) {
+            .holo-title {
+                font-size: 2.5rem;
+            }
+            
+            .service-matrix {
+                grid-template-columns: 1fr;
+            }
+            
+            .orb-container {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .cta-text {
+                font-size: 1.8rem;
+            }
+            
+            .cyber-terminal {
+                width: 95%;
+                height: 80vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HOLOGRAPHIC ENVIRONMENT -->
+    <div class="grid-floor"></div>
+    <div class="neon-bars"></div>
+    
+    <!-- NAVIGATION TERMINAL -->
+    <div class="nav-terminal">
+        <button class="terminal-button" id="returnTerminal">Main Interface</button>
+    </div>
+
+    <div class="cyber-container">
+        <!-- HOLOGRAPHIC HEADER -->
+        <div class="holo-header">
+            <h1 class="holo-title">Cyber Services</h1>
+            <div class="holo-subtitle">Specialized Solutions Matrix</div>
+        </div>
+
+        <!-- SERVICE MATRIX -->
+        <div class="service-matrix">
+            <!-- NETWORK SECURITY SERVICE -->
+            <div class="service-card">
+                <div class="service-icon">[≡]</div>
+                <h2 class="service-title">Network Fortification</h2>
+                <p class="service-desc">
+                    Enterprise-grade security solutions leveraging my Computer Network & Security expertise. 
+                    Includes vulnerability assessment, firewall configuration, and intrusion detection.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Linux Systems</span>
+                    <span class="tech-tag">Firewalls</span>
+                    <span class="tech-tag">VPNs</span>
+                    <span class="tech-tag">A+ Certified</span>
+                </div>
+            </div>
+
+            <!-- SOFTWARE DEVELOPMENT -->
+            <div class="service-card">
+                <div class="service-icon">{ }</div>
+                <h2 class="service-title">Code Engineering</h2>
+                <p class="service-desc">
+                    Custom software solutions built on Procedural Programming fundamentals. 
+                    Specializing in efficient algorithm design and maintainable code architecture.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">C++</span>
+                    <span class="tech-tag">Algorithms</span>
+                    <span class="tech-tag">Debugging</span>
+                </div>
+            </div>
+
+            <!-- CLOUD SOLUTIONS -->
+            <div class="service-card">
+                <div class="service-icon">☁</div>
+                <h2 class="service-title">Cloud Integration</h2>
+                <p class="service-desc">
+                    Modern cloud infrastructure deployment and optimization using 
+                    my Cloud-Based Technologies training. Migration, scaling, and cost management.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">AWS</span>
+                    <span class="tech-tag">Azure</span>
+                    <span class="tech-tag">Virtualization</span>
+                    <span class="tech-tag">CI/CD</span>
+                </div>
+            </div>
+
+            <!-- IT CONSULTING -->
+            <div class="service-card">
+                <div class="service-icon">></div>
+                <h2 class="service-title">Strategic IT Consulting</h2>
+                <p class="service-desc">
+                    Leveraging my Non-Technical Skills for IT Professionals to align technology 
+                    with business objectives. Includes workflow analysis and tool recommendations.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Process Audit</span>
+                    <span class="tech-tag">Microsoft Suite</span>
+                    <span class="tech-tag">Training</span>
+                    <span class="tech-tag">AI Ethics</span>
+                </div>
+            </div>
+            
+            <!-- CUSTOM IT SOLUTIONS -->
+            <div class="service-card">
+                <div class="service-icon">⚙</div>
+                <h2 class="service-title">Bespoke IT Systems</h2>
+                <p class="service-desc">
+                    Tailored IT solutions designed to your exact specifications. From custom workstations 
+                    to specialized server configurations, built with premium components and precision.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Custom Builds</span>
+                    <span class="tech-tag">Hardware</span>
+                    <span class="tech-tag">Optimization</span>
+                    <span class="tech-tag">Benchmarking</span>
+                </div>
+            </div>
+            
+            <!-- ON-DEMAND SERVICES -->
+            <div class="service-card">
+                <div class="service-icon">⌘</div>
+                <h2 class="service-title">On-Demand Cyber Services</h2>
+                <p class="service-desc">
+                    Need something beyond standard offerings? I provide custom cyber solutions 
+                    for unique challenges. Describe your requirements and I'll architect a solution.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Custom Solutions</span>
+                    <span class="tech-tag">Project Analysis</span>
+                    <span class="tech-tag">Rapid Prototyping</span>
+                    <span class="tech-tag">Tailored Support</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SKILL ORBS VISUALIZATION -->
+        <div class="skill-orbs">
+            <div class="orb-container" style="animation-delay: 0s;">
+                <div class="orb">Network Security</div>
+            </div>
+            <div class="orb-container" style="animation-delay: 0.5s;">
+                <div class="orb">Linux Admin</div>
+            </div>
+            <div class="orb-container" style="animation-delay: 1s;">
+                <div class="orb">Cloud Tech</div>
+            </div>
+            <div class="orb-container" style="animation-delay: 1.5s;">
+                <div class="orb">Procedural Code</div>
+            </div>
+            <div class="orb-container" style="animation-delay: 2s;">
+                <div class="orb">System Architecture</div>
+            </div>
+            <div class="orb-container" style="animation-delay: 2.5s;">
+                <div class="orb">Custom Solutions</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DATA STREAM FOOTER WITH CTA -->
+    <div class="data-stream">
+        <div class="stream-container">
+            <div class="stream-column" style="animation-delay: 0s;">
+                <div class="stream-bit" style="animation-duration: 8s; animation-delay: 0s;"></div>
+                <div class="stream-bit" style="animation-duration: 10s; animation-delay: 2s;"></div>
+                <div class="stream-bit" style="animation-duration: 12s; animation-delay: 4s;"></div>
+            </div>
+            <!-- Repeat multiple columns -->
+            <!-- [Additional stream columns...] -->
+        </div>
+        
+        <div class="cyber-cta">
+            <div class="cta-text">Ready to Cyber-Enhance Your Systems?</div>
+            <button class="cta-button" id="initiateHandshake">Initiate Handshake</button>
+        </div>
+    </div>
+
+    <!-- CYBER TERMINAL MODAL -->
+    <div class="cyber-modal" id="cyberModal">
+        <div class="cyber-terminal">
+            <div class="terminal-header">
+                <div class="terminal-title">TANAKA CYBER TERMINAL</div>
+                <button class="terminal-close" id="closeTerminal">✕</button>
+            </div>
+            <div class="terminal-body">
+                <div class="cyber-grid"></div>
+                <div class="terminal-output" id="terminalOutput">
+                    <!-- Terminal output will be inserted here by JavaScript -->
+                </div>
+                <div class="command-line">
+                    <span class="prompt">>></span>
+                    <input type="text" class="command-input" id="commandInput" placeholder="Type 'help' for commands" autofocus>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Prevent scroll restoration
+        if (history.scrollRestoration) {
+            history.scrollRestoration = 'manual';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Scroll to top on initial load
+            window.scrollTo(0, 0);
+
+            // Dynamic stream generation
+            const streamContainer = document.querySelector('.stream-container');
+            
+            // Generate 15 stream columns
+            for (let i = 0; i < 15; i++) {
+                const col = document.createElement('div');
+                col.className = 'stream-column';
+                col.style.animationDelay = `${i * 0.2}s`;
+                
+                // Add 3 streaming bits per column
+                for (let j = 0; j < 3; j++) {
+                    const bit = document.createElement('div');
+                    bit.className = 'stream-bit';
+                    bit.style.animationDuration = `${8 + Math.random() * 7}s`;
+                    bit.style.animationDelay = `${j * 2 + Math.random() * 2}s`;
+                    col.appendChild(bit);
+                }
+                
+                streamContainer.appendChild(col);
+            }
+
+            // Orb interaction
+            const orbs = document.querySelectorAll('.orb');
+            orbs.forEach(orb => {
+                orb.addEventListener('mouseenter', function() {
+                    this.style.animation = 'none';
+                    this.offsetHeight; // Trigger reflow
+                    this.style.animation = 'float 6s ease-in-out infinite';
+                });
+            });
+
+            // Service card tilt effect
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const xAxis = (window.innerWidth / 2 - e.pageX) / 15;
+                    const yAxis = (window.innerHeight / 2 - e.pageY) / 15;
+                    this.style.transform = `translateY(-10px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-10px) rotateX(5deg)';
+                });
+            });
+            
+            // Return to main interface - with scroll to top
+            document.getElementById('returnTerminal').addEventListener('click', function() {
+                window.scrollTo(0, 0);
+                // Add cyber transition effect
+                document.body.style.animation = 'fadeOut 0.5s forwards';
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 500);
+            });
+            
+            // Cyber Terminal Modal
+            const cyberModal = document.getElementById('cyberModal');
+            const initiateHandshake = document.getElementById('initiateHandshake');
+            const closeTerminal = document.getElementById('closeTerminal');
+            const terminalOutput = document.getElementById('terminalOutput');
+            const commandInput = document.getElementById('commandInput');
+            
+            // Open terminal modal
+            initiateHandshake.addEventListener('click', function() {
+                cyberModal.classList.add('active');
+                commandInput.focus();
+                
+                // Clear previous output
+                terminalOutput.innerHTML = '';
+                
+                // Add welcome message with typing effect
+                const welcomeMessages = [
+                    {text: "Initializing TANAKA Cyber Terminal...", class: "info", delay: 0},
+                    {text: "Establishing secure connection...", class: "info", delay: 800},
+                    {text: "Authenticating user credentials...", class: "info", delay: 1600},
+                    {text: "Connection established successfully!", class: "success", delay: 2400},
+                    {text: " ", class: "", delay: 3200},
+                    {text: "Welcome to TANAKA Cyber Services Interface", class: "highlight", delay: 4000},
+                    {text: "Type 'help' to view available commands", class: "info", delay: 4800},
+                    {text: " ", class: "", delay: 5600}
+                ];
+                
+                welcomeMessages.forEach(msg => {
+                    setTimeout(() => {
+                        const line = document.createElement('div');
+                        line.className = `output-line ${msg.class}`;
+                        line.textContent = msg.text;
+                        terminalOutput.appendChild(line);
+                        line.style.animation = 'typeIn 0.1s forwards';
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }, msg.delay);
+                });
+            });
+            
+            // Close terminal modal
+            closeTerminal.addEventListener('click', function() {
+                cyberModal.classList.remove('active');
+            });
+            
+            // Terminal commands
+            commandInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const command = this.value.trim().toLowerCase();
+                    this.value = '';
+                    
+                    // Add command to output
+                    const commandLine = document.createElement('div');
+                    commandLine.className = 'output-line';
+                    commandLine.innerHTML = `<span class="prompt">>></span> ${command}`;
+                    terminalOutput.appendChild(commandLine);
+                    
+                    // Process command
+                    let response = '';
+                    let responseClass = '';
+                    
+                    switch(command) {
+                        case 'help':
+                            response = [
+                                "Available commands:",
+                                "-------------------",
+                                "help - Show this help message",
+                                "services - List available cyber services",
+                                "contact - Get connection protocols",
+                                "clear - Clear terminal output",
+                                "exit - Close terminal"
+                            ].join('<br>');
+                            responseClass = 'info';
+                            break;
+                            
+                        case 'services':
+                            response = [
+                                "TANAKA Cyber Services:",
+                                "----------------------",
+                                "1. Network Fortification",
+                                "2. Code Engineering",
+                                "3. Cloud Integration",
+                                "4. Strategic IT Consulting",
+                                "5. Bespoke IT Systems",
+                                "6. On-Demand Cyber Services",
+                                " ",
+                                "For details, visit main interface"
+                            ].join('<br>');
+                            responseClass = 'success';
+                            break;
+                            
+                        case 'contact':
+                            response = [
+                                "Secure Connection Protocols:",
+                                "---------------------------",
+                                "Encrypted Email: tanakagift1000@gmail.com",
+                                "Signal Protocol: +27 76 434 4188",
+                                "PGP Key: Available upon request",
+                                " ",
+                                "All communications are end-to-end encrypted"
+                            ].join('<br>');
+                            responseClass = 'highlight';
+                            break;
+                            
+                        case 'clear':
+                            terminalOutput.innerHTML = '';
+                            return;
+                            
+                        case 'exit':
+                            cyberModal.classList.remove('active');
+                            return;
+                            
+                        default:
+                            response = `Command not recognized: ${command}`;
+                            responseClass = 'error';
+                    }
+                    
+                    // Add response to output
+                    const responseLine = document.createElement('div');
+                    responseLine.className = `output-line ${responseClass}`;
+                    responseLine.innerHTML = response;
+                    terminalOutput.appendChild(responseLine);
+                    
+                    // Scroll to bottom
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                }
+            });
+            
+            // Close modal when clicking outside
+            cyberModal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        // Scroll to top on page reload
+        window.onbeforeunload = function() {
+            window.scrollTo(0, 0);
+        };
+    </script>
+</body>
+</html>

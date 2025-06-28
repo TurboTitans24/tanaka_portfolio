@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TANAKA | FULL CYBER PROFILE</title>
+    <style>
+        /* === NEO-CYBERPUNK STYLING === */
+        :root {
+            --matrix-green: #00ff41;
+            --neon-red: #ff073a;
+            --cyber-black: #0d0208;
+            --hacker-white: #e6e6e6;
+            --glow-blue: #0af;
+            --neon-purple: #bc13fe;
+            --neon-yellow: #ffe81f;
+        }
+        
+        body {
+            background-color: var(--cyber-black);
+            color: var(--matrix-green);
+            font-family: 'Courier Prime', 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* === CYBER GRID BACKGROUND === */
+        .cyber-grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            background: 
+                linear-gradient(rgba(0,255,65,0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,65,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            opacity: 0.3;
+        }
+
+        /* === PULSING SCANLINES === */
+        .scanlines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(
+                to bottom,
+                transparent 95%,
+                rgba(0, 255, 65, 0.03) 96%,
+                transparent 97%
+            );
+            background-size: 100% 8px;
+            animation: scan 8s linear infinite;
+        }
+
+        /* === DATA STREAM EFFECT === */
+        .data-stream {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -3;
+            background: linear-gradient(
+                to bottom,
+                transparent,
+                transparent 98%,
+                rgba(0, 255, 65, 0.1) 99%,
+                transparent
+            );
+            background-size: 100% 30px;
+            animation: data-stream 20s linear infinite;
+            pointer-events: none;
+        }
+
+        /* === CYBER HEADER === */
+        .cyber-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid var(--matrix-green);
+            box-shadow: 0 0 15px var(--matrix-green);
+            background: rgba(13, 2, 8, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cyber-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 65, 0.1),
+                transparent
+            );
+            animation: header-scan 6s linear infinite;
+        }
+
+        .header-title {
+            font-size: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            text-shadow: 
+                0 0 5px var(--matrix-green),
+                0 0 10px var(--matrix-green);
+            animation: glitch 3s infinite alternate;
+            position: relative;
+        }
+
+        .header-id {
+            font-size: 0.9rem;
+            color: var(--hacker-white);
+            background: rgba(0, 20, 8, 0.7);
+            padding: 5px 10px;
+            border: 1px solid var(--matrix-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-id::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 65, 0.3),
+                transparent
+            );
+            animation: id-scan 3s linear infinite;
+        }
+
+        /* === BIO CARD === */
+        .bio-card {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin: 40px;
+            padding: 30px;
+            background: rgba(0, 20, 8, 0.5);
+            border: 1px solid var(--matrix-green);
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bio-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(
+                90deg,
+                var(--neon-red),
+                var(--matrix-green),
+                var(--glow-blue),
+                var(--neon-purple),
+                var(--neon-yellow)
+            );
+            background-size: 500% 100%;
+            animation: rainbow-border 8s linear infinite;
+        }
+
+        .avatar-container {
+            position: relative;
+            border: 3px solid var(--matrix-green);
+            box-shadow: 0 0 20px var(--matrix-green);
+            transition: all 0.5s ease;
+            overflow: hidden;
+        }
+
+        .avatar-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 0 30px var(--matrix-green),
+                0 0 60px rgba(0, 255, 65, 0.3);
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: relative;
+            filter: sepia(100%) hue-rotate(70deg) contrast(120%) brightness(0.8);
+            transition: all 0.5s ease;
+        }
+
+        .avatar-container:hover .profile-image {
+            filter: sepia(50%) hue-rotate(50deg) contrast(110%) brightness(1);
+        }
+
+        .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 255, 65, 0.1) 0%,
+                transparent 20%,
+                transparent 80%,
+                rgba(0, 255, 65, 0.1) 100%
+            );
+            pointer-events: none;
+        }
+
+        .image-overlay::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                transparent 45%,
+                rgba(0, 255, 65, 0.1) 50%,
+                transparent 55%
+            );
+            background-size: 5px 5px;
+            animation: avatar-scan 10s linear infinite;
+        }
+
+        .image-overlay::after {
+            content: 'TANAKA_PROFILE_IMG_V2.4.7';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: var(--matrix-green);
+            font-size: 0.8rem;
+            text-shadow: 0 0 3px var(--matrix-green);
+            background: rgba(0, 0, 0, 0.7);
+            padding: 3px 0;
+        }
+
+        /* === INFO SECTIONS === */
+        .info-section {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--neon-red);
+            text-shadow: 0 0 5px var(--neon-red);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--matrix-green);
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '>>';
+            margin-right: 10px;
+            color: var(--matrix-green);
+            animation: blink 1s step-end infinite;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: rgba(0, 20, 8, 0.7);
+            border-left: 3px solid var(--matrix-green);
+            padding: 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .info-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        .info-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 65, 0.05),
+                transparent
+            );
+            pointer-events: none;
+            animation: item-scan 3s linear infinite;
+        }
+
+        .info-label {
+            color: var(--hacker-white);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            position: relative;
+        }
+
+        .info-label::after {
+            content: ':';
+            color: var(--matrix-green);
+            margin-left: 2px;
+        }
+
+        .info-value {
+            color: var(--matrix-green);
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-shadow: 0 0 3px var(--matrix-green);
+        }
+
+        /* === SKILL METERS === */
+        .skill-meter {
+            margin-top: 10px;
+            height: 6px;
+            background: rgba(0, 20, 8, 0.9);
+            border: 1px solid var(--matrix-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-level {
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                var(--cyber-black),
+                var(--matrix-green)
+            );
+            position: relative;
+        }
+
+        .skill-level::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            animation: skill-glow 2s linear infinite;
+        }
+
+        /* === PROJECT SHOWCASE === */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .project-card {
+            background: rgba(0, 20, 8, 0.7);
+            border: 1px solid var(--matrix-green);
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px var(--matrix-green);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                135deg,
+                transparent,
+                rgba(0, 255, 65, 0.05),
+                transparent
+            );
+            pointer-events: none;
+        }
+
+        .project-title {
+            color: var(--neon-red);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            border-bottom: 1px solid var(--matrix-green);
+            padding-bottom: 5px;
+        }
+
+        .project-desc {
+            color: var(--hacker-white);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tech-tag {
+            background: rgba(0, 20, 8, 0.9);
+            border: 1px solid var(--glow-blue);
+            color: var(--hacker-white);
+            padding: 3px 10px;
+            font-size: 0.8rem;
+            border-radius: 3px;
+        }
+
+        /* === INTERESTS CHIP CLOUD === */
+        .chip-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chip {
+            background: rgba(0, 20, 8, 0.7);
+            border: 1px solid var(--matrix-green);
+            color: var(--hacker-white);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chip:hover {
+            background: var(--matrix-green);
+            color: var(--cyber-black);
+            box-shadow: 0 0 10px var(--matrix-green);
+            transform: scale(1.05);
+        }
+
+        .chip::before {
+            content: '■';
+            color: var(--neon-red);
+            margin-right: 5px;
+            font-size: 0.8rem;
+        }
+
+        /* === FOOTER NAV === */
+        .cyber-footer {
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+            margin-top: 50px;
+            border-top: 1px solid var(--matrix-green);
+            position: relative;
+        }
+
+        .cyber-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--matrix-green),
+                transparent
+            );
+            animation: footer-glow 3s linear infinite;
+        }
+
+        .nav-button {
+            background: rgba(0, 20, 8, 0.7);
+            border: 1px solid var(--matrix-green);
+            color: var(--matrix-green);
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button:hover {
+            background: var(--matrix-green);
+            color: var(--cyber-black);
+            box-shadow: 0 0 20px var(--matrix-green);
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 65, 0.3),
+                transparent
+            );
+            transition: all 0.5s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        /* === CYBER TERMINAL === */
+        .cyber-terminal {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 20, 8, 0.8);
+            border: 1px solid var(--matrix-green);
+            padding: 15px;
+            width: 300px;
+            max-height: 150px;
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--matrix-green);
+            font-size: 0.8rem;
+        }
+
+        .terminal-line {
+            margin-bottom: 5px;
+            opacity: 0;
+            animation: fade-in 0.5s forwards;
+            position: relative;
+        }
+
+        .terminal-line::after {
+            content: '▋';
+            color: var(--matrix-green);
+            animation: blink 1s step-end infinite;
+            position: absolute;
+            right: -10px;
+        }
+
+        .cursor-blink::after {
+            content: none;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        @keyframes data-stream {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 100%; }
+        }
+
+        @keyframes header-scan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes id-scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes rainbow-border {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        @keyframes glitch {
+            0%, 100% { 
+                text-shadow: 
+                    0 0 5px var(--matrix-green),
+                    0 0 10px var(--matrix-green); 
+            }
+            20% { 
+                text-shadow: 
+                    2px 0 var(--neon-red),
+                    -2px 0 var(--glow-blue); 
+            }
+            40% { 
+                text-shadow: 
+                    -2px 0 var(--neon-red),
+                    2px 0 var(--glow-blue); 
+            }
+            60% { 
+                text-shadow: 
+                    2px -2px var(--neon-red),
+                    -2px 2px var(--glow-blue); 
+            }
+            80% { 
+                text-shadow: 
+                    -2px -2px var(--neon-red),
+                    2px 2px var(--glow-blue); 
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes fade-in {
+            to { opacity: 1; }
+        }
+
+        @keyframes avatar-scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 100px 100px; }
+        }
+
+        @keyframes item-scan {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes skill-glow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes footer-glow {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- BACKGROUND ELEMENTS -->
+    <div class="cyber-grid-bg"></div>
+    <div class="scanlines"></div>
+    <div class="data-stream"></div>
+
+    <!-- HEADER -->
+    <header class="cyber-header">
+        <div class="header-title">TANAKA GIFT MUNDODZI</div>
+        <div class="header-id">IT_PROFILE_v2.4.7</div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <div class="bio-card">
+            <!-- AVATAR SECTION -->
+            <div class="avatar-container">
+                <img src="profile.jpg" alt="Cyber Profile Image" class="profile-image">
+                <div class="image-overlay"></div>
+            </div>
+
+            <!-- INFO SECTION -->
+            <div class="info-column">
+                <!-- PERSONAL DATA -->
+                <div class="info-section">
+                    <h2 class="section-title">PERSONAL DATA</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Full Name</div>
+                            <div class="info-value">Tanaka Gift Mundodzi</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Alias</div>
+                            <div class="info-value">Bleed</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Date of Birth</div>
+                            <div class="info-value">[REDACTED]</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Nationality</div>
+                            <div class="info-value">Zimbabwean</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Location</div>
+                            <div class="info-value">Johannesburg, RSA</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- EDUCATION -->
+                <div class="info-section">
+                    <h2 class="section-title">EDUCATION</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Institution</div>
+                            <div class="info-value">Eduvos</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Degree</div>
+                            <div class="info-value">Bachelors of Science</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Field</div>
+                            <div class="info-value">Information Technology</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Specialization</div>
+                            <div class="info-value">Software Engineering</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Timeline</div>
+                            <div class="info-value">2024 - Current</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DEMOGRAPHICS -->
+                <div class="info-section">
+                    <h2 class="section-title">DEMOGRAPHIC PROFILE</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">Race/Ethnicity</div>
+                            <div class="info-value">Black of African Decent</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Gender</div>
+                            <div class="info-value">Male</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Disability Status</div>
+                            <div class="info-value">None reported</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">Marital Status</div>
+                            <div class="info-value">Single</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPERTISE SECTION -->
+        <div class="info-section" style="margin: 0 40px;">
+            <h2 class="section-title">CORE EXPERTISE</h2>
+            <div class="info-grid">
+                <div class="info-item" style="border-left-color: var(--neon-red);">
+                    <div class="info-label">Primary Skill</div>
+                    <div class="info-value">Coding</div>
+                    <div class="info-label">Languages</div>
+                    <div class="info-value">Python, C++, Bash, HTML/CSS</div>
+                    <div class="skill-meter">
+                        <div class="skill-level" style="width: 85%;"></div>
+                    </div>
+                </div>
+                <div class="info-item" style="border-left-color: var(--glow-blue);">
+                    <div class="info-label">Specialization</div>
+                    <div class="info-value">Research</div>
+                    <div class="info-label">Focus Areas</div>
+                    <div class="info-value">Emerging Technologies, Cybersecurity</div>
+                    <div class="skill-meter">
+                        <div class="skill-level" style="width: 90%;"></div>
+                    </div>
+                </div>
+                <div class="info-item" style="border-left-color: var(--matrix-green);">
+                    <div class="info-label">Security</div>
+                    <div class="info-value">Cybersecurity</div>
+                    <div class="info-label">Certifications</div>
+                    <div class="info-value">CompTIA Security+ (In Progress)</div>
+                    <div class="skill-meter">
+                        <div class="skill-level" style="width: 75%;"></div>
+                    </div>
+                </div>
+                <div class="info-item" style="border-left-color: var(--neon-purple);">
+                    <div class="info-label">Systems</div>
+                    <div class="info-value">Linux Administration</div>
+                    <div class="info-label">Experience</div>
+                    <div class="info-value">Ubuntu, Kali, Arch</div>
+                    <div class="skill-meter">
+                        <div class="skill-level" style="width: 80%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROJECTS SECTION -->
+        <div class="info-section" style="margin: 40px;">
+            <h2 class="section-title">PROJECT SHOWCASE</h2>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="project-title">CYBER DEFENSE MATRIX</div>
+                    <div class="project-desc">
+                        A comprehensive cybersecurity framework implementation with automated threat detection and response protocols.
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Linux</span>
+                        <span class="tech-tag">Bash</span>
+                        <span class="tech-tag">Security</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-title">NEO TERMINAL</div>
+                    <div class="project-desc">
+                        Custom terminal emulator with enhanced features for cybersecurity professionals and developers.
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Terminal</span>
+                        <span class="tech-tag">CLI</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-title">DATA CRYPT</div>
+                    <div class="project-desc">
+                        Secure file encryption/decryption tool with multiple algorithm support and stealth mode operation.
+                    </div>
+                    <div class="project-tech">
+                        <span class="tech-tag">Cryptography</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Security</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTERESTS SECTION -->
+        <div class="info-section" style="margin: 40px;">
+            <h2 class="section-title">PERSONAL INTERESTS</h2>
+            <div class="chip-cloud">
+                <div class="chip">Education</div>
+                <div class="chip">Environment</div>
+                <div class="chip">Housing & Homelessness</div>
+                <div class="chip">International Affairs</div>
+                <div class="chip">Science & Technology</div>
+                <div class="chip">Open Source</div>
+                <div class="chip">Digital Privacy</div>
+                <div class="chip">AI Ethics</div>
+                <div class="chip">Cybersecurity</div>
+                <div class="chip">Linux Advocacy</div>
+                <div class="chip">Digital Rights</div>
+                <div class="chip">Ethical Hacking</div>
+            </div>
+        </div>
+
+        <!-- LANGUAGE SECTION -->
+        <div class="info-section" style="margin: 0 40px 40px;">
+            <h2 class="section-title">LANGUAGE PROFILE</h2>
+            <div class="info-grid" style="grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));">
+                <div class="info-item">
+                    <div class="info-label">Primary Language</div>
+                    <div class="info-value">English</div>
+                    <div class="info-label">Proficiency</div>
+                    <div class="info-value">Native</div>
+                    <div class="skill-meter">
+                        <div class="skill-level" style="width: 100%;"></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Secondary Language</div>
+                    <div class="info-value">Shona</div>
+                    <div class="info-label">Proficiency</div>
+                    <div class="info-value">Fluent</div>
+                    <div class="skill-meter">
+                        <div class="skill-level" style="width: 95%;"></div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Other Language</div>
+                    <div class="info-value">Zulu</div>
+                    <div class="info-label">Proficiency</div>
+                    <div class="info-value">Basic</div>
+                    <div class="skill-meter">
+                        <div class="skill-level" style="width: 40%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CONTACT SECTION -->
+        <div class="info-section" style="margin: 0 40px 40px;">
+            <h2 class="section-title">CONTACT MATRIX</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Primary Node</div>
+                    <div class="info-value">tanakagift1000@gmail.com</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Secure Channel</div>
+                    <div class="info-value">PGP Key Available</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Social Grid</div>
+                    <div class="info-value">Himalayas, Catchafire</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Direct Message</div>
+                    <div class="info-value">+27 76 434 4188</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER NAVIGATION -->
+    <footer class="cyber-footer">
+        <button class="nav-button" onclick="window.location.href='index.html'">
+            RETURN TO MAINFRAME
+        </button>
+    </footer>
+
+    <!-- CYBER TERMINAL EFFECT -->
+    <div class="cyber-terminal">
+        <div class="terminal-line">HUMAN-OPTIMIZED SYSTEMS</div>
+        <div class="terminal-line">> EMPATHY</div>
+        <div class="terminal-line">> ADAPTABILITY</div>
+        <div class="terminal-line">> CREATIVE PROBLEM-SOLVING</div>
+        <div class="terminal-line">> COLLABORATIVE INTELLIGENCE</div>
+    </div>
+
+    <script>
+        // TERMINAL TYPEWRITER EFFECT
+        const terminalLines = document.querySelectorAll('.terminal-line');
+        
+        terminalLines.forEach((line, index) => {
+            const text = line.textContent;
+            line.textContent = '';
+            
+            setTimeout(() => {
+                let i = 0;
+                const typing = setInterval(() => {
+                    if (i < text.length) {
+                        line.textContent += text.charAt(i);
+                        i++;
+                    } else {
+                        clearInterval(typing);
+                        line.classList.add('cursor-blink');
+                    }
+                }, 30);
+            }, index * 1000);
+        });
+
+        // CHIP HOVER EFFECTS
+        const chips = document.querySelectorAll('.chip');
+        chips.forEach(chip => {
+            chip.addEventListener('mouseover', () => {
+                const colors = ['#00ff41', '#ff073a', '#0af', '#bc13fe', '#ffe81f'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                chip.style.borderColor = randomColor;
+                chip.style.boxShadow = `0 0 10px ${randomColor}`;
+            });
+            
+            chip.addEventListener('mouseout', () => {
+                chip.style.borderColor = '#00ff41';
+                chip.style.boxShadow = 'none';
+            });
+        });
+
+        // GLITCH EFFECT ON HEADER
+        const header = document.querySelector('.header-title');
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                header.style.animation = 'none';
+                void header.offsetWidth; // Trigger reflow
+                header.style.animation = 'glitch 0.5s linear';
+            }
+        }, 3000);
+
+        // RANDOM TERMINAL MESSAGES
+        const terminalMessages = [
+            "> SCANNING FOR INTRUSIONS... CLEAR",
+            "> ENCRYPTION LEVEL: MAXIMUM",
+            "> NETWORK STATUS: SECURE",
+            "> LAST LOGIN: TODAY 04:23:17 UTC",
+            "> NO UNAUTHORIZED ACCESS DETECTED",
+            "> RUNNING DIAGNOSTICS... ALL SYSTEMS OK",
+            "> DATA STREAM OPTIMIZED",
+            "> CYBER DEFENSE MATRIX ACTIVE"
+        ];
+
+        const terminal = document.querySelector('.cyber-terminal');
+        setInterval(() => {
+            if (Math.random() > 0.8 && terminal.children.length < 8) {
+                const newLine = document.createElement('div');
+                newLine.className = 'terminal-line';
+                newLine.textContent = terminalMessages[Math.floor(Math.random() * terminalMessages.length)];
+                terminal.appendChild(newLine);
+                
+                // Animate the new line
+                newLine.style.opacity = '0';
+                setTimeout(() => {
+                    newLine.style.animation = 'fade-in 0.5s forwards';
+                }, 100);
+                
+                // Remove oldest line if too many
+                if (terminal.children.length > 8) {
+                    terminal.removeChild(terminal.children[0]);
+                }
+            }
+        }, 5000);
+
+        // SKILL METER ANIMATION
+        const skillLevels = document.querySelectorAll('.skill-level');
+        skillLevels.forEach(level => {
+            // Store original width
+            const originalWidth = level.style.width;
+            level.style.width = '0';
+            
+            // Animate to original width
+            setTimeout(() => {
+                level.style.transition = 'width 2s ease-out';
+                level.style.width = originalWidth;
+            }, 500);
+        });
+
+        // PROJECT CARD HOVER EFFECTS
+        const projectCards = document.querySelectorAll('.project-card');
+        projectCards.forEach(card => {
+            card.addEventListener('mouseover', () => {
+                const colors = ['#00ff41', '#ff073a', '#0af', '#bc13fe'];
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                card.style.borderColor = randomColor;
+                card.style.boxShadow = `0 0 20px ${randomColor}`;
+            });
+            
+            card.addEventListener('mouseout', () => {
+                card.style.borderColor = '#00ff41';
+                card.style.boxShadow = 'none';
+            });
+        });
+
+        // IMAGE HOVER EFFECT
+        const profileImage = document.querySelector('.profile-image');
+        profileImage.addEventListener('mouseover', () => {
+            const overlay = document.querySelector('.image-overlay');
+            overlay.style.background = 'linear-gradient(to bottom, rgba(0, 255, 65, 0.2) 0%, transparent 20%, transparent 80%, rgba(0, 255, 65, 0.2) 100%)';
+        });
+
+        profileImage.addEventListener('mouse

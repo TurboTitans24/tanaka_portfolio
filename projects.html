@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TANAKA | PROJECT ARCHIVE</title>
+    <style>
+        /* === CYBERPUNK BASE STYLING === */
+        :root {
+            --neon-green: #00ff41;
+            --neon-red: #ff073a;
+            --neon-blue: #00f7ff;
+            --neon-purple: #bc13fe;
+            --matrix-green: #00ff41;
+            --dark-bg: #0d0208;
+            --darker-bg: #030a0a;
+            --grid-color: rgba(0, 255, 65, 0.1);
+            --scanline-color: rgba(0, 255, 65, 0.05);
+        }
+        
+        body {
+            background-color: var(--dark-bg);
+            color: var(--matrix-green);
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* === ADVANCED MATRIX EFFECTS === */
+        .cyber-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .matrix-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(var(--grid-color) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+            background-size: 40px 40px;
+            opacity: 0.3;
+            animation: grid-scan 20s linear infinite;
+        }
+
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                var(--scanline-color) 1px,
+                transparent 2px
+            );
+            background-size: 100% 4px;
+            animation: scanline 8s linear infinite;
+        }
+
+        .glitch-effect {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 15 -7"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+            opacity: 0.1;
+            mix-blend-mode: overlay;
+        }
+
+        /* === ENHANCED HEADER STYLES === */
+        .archive-header {
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            margin-bottom: 40px;
+            background: linear-gradient(to bottom, rgba(0,20,8,0.7) 0%, rgba(0,0,0,0) 100%);
+            border-bottom: 1px solid var(--neon-green);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .archive-title {
+            font-size: 4rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5rem;
+            color: var(--neon-green);
+            text-shadow: 
+                0 0 10px var(--neon-green),
+                0 0 20px var(--neon-green),
+                0 0 40px var(--neon-green);
+            margin: 0;
+            animation: glitch 3s infinite alternate;
+            position: relative;
+            display: inline-block;
+        }
+
+        .archive-title::before,
+        .archive-title::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+        }
+
+        .archive-title::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--neon-red);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim 5s infinite linear alternate-reverse;
+        }
+
+        .archive-title::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--neon-blue);
+            clip: rect(44px, 450px, 56px, 0);
+            animation: glitch-anim2 5s infinite linear alternate-reverse;
+        }
+
+        .archive-subtitle {
+            font-size: 1.2rem;
+            color: white;
+            letter-spacing: 0.3rem;
+            margin-top: 10px;
+            text-shadow: 0 0 5px var(--neon-green);
+            position: relative;
+        }
+
+        /* === ENHANCED NAVIGATION BUTTON === */
+        .nav-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--neon-green);
+            border: 1px solid var(--neon-green);
+            padding: 12px 25px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.3);
+            text-shadow: 0 0 5px var(--neon-green);
+            overflow: hidden;
+        }
+
+        .nav-button:hover {
+            background: rgba(0, 255, 65, 0.3);
+            box-shadow: 0 0 25px var(--neon-green);
+            transform: translateY(-2px);
+            letter-spacing: 4px;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 65, 0.4),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button::after {
+            content: '>>';
+            margin-left: 15px;
+            animation: blink 1s infinite;
+        }
+
+        /* === ENHANCED PROJECT CARDS === */
+        .projects-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            padding: 0 40px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: rgba(13, 2, 8, 0.7);
+            border: 1px solid var(--neon-green);
+            border-radius: 2px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 0 30px var(--neon-green);
+            border-color: var(--neon-purple);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 247, 255, 0.1),
+                transparent
+            );
+            transition: 0.7s;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card h2 {
+            color: var(--neon-green);
+            font-size: 1.8rem;
+            margin-top: 0;
+            border-bottom: 1px solid var(--neon-green);
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            text-shadow: 0 0 5px var(--neon-green);
+        }
+
+        .project-card h3 {
+            color: white;
+            font-size: 1.2rem;
+            margin: 15px 0 10px;
+            text-shadow: 0 0 3px var(--neon-green);
+        }
+
+        .project-card p {
+            color: #ccc;
+            font-size: 0.95rem;
+            text-shadow: 0 0 2px black;
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            color: var(--neon-green);
+            font-size: 0.9rem;
+            text-shadow: 0 0 3px var(--neon-green);
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--neon-green);
+            padding: 3px 10px;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            border: 1px solid var(--neon-green);
+            text-shadow: 0 0 2px var(--neon-green);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 8px var(--neon-green);
+        }
+
+        .tag.red {
+            color: var(--neon-red);
+            border-color: var(--neon-red);
+            background: rgba(255, 7, 58, 0.1);
+            text-shadow: 0 0 2px var(--neon-red);
+        }
+
+        .tag.blue {
+            color: var(--neon-blue);
+            border-color: var(--neon-blue);
+            background: rgba(0, 247, 255, 0.1);
+            text-shadow: 0 0 2px var(--neon-blue);
+        }
+
+        .tag.purple {
+            color: var(--neon-purple);
+            border-color: var(--neon-purple);
+            background: rgba(188, 19, 254, 0.1);
+            text-shadow: 0 0 2px var(--neon-purple);
+        }
+
+        /* === ACHIEVEMENTS GRID === */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .achievement-item {
+            background: rgba(0, 20, 8, 0.3);
+            border-left: 3px solid var(--neon-green);
+            padding: 12px 15px;
+            position: relative;
+            transition: all 0.3s ease;
+            color: #ddd;
+            font-size: 0.9rem;
+        }
+
+        .achievement-item:hover {
+            background: rgba(0, 20, 8, 0.6);
+            transform: translateX(5px);
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.2);
+        }
+
+        .achievement-item::before {
+            content: '✓';
+            color: var(--neon-green);
+            margin-right: 8px;
+            text-shadow: 0 0 3px var(--neon-green);
+        }
+</style>
+</head>
+<body>
+    <!-- CYBERPUNK OVERLAY EFFECTS -->
+    <div class="cyber-overlay">
+        <div class="matrix-grid"></div>
+        <div class="scanlines"></div>
+        <div class="glitch-effect"></div>
+    </div>
+
+    <!-- ENHANCED NAVIGATION BUTTON -->
+    <button class="nav-button" id="returnBtn">
+        <span class="btn-text">INITIATE RETURN SEQUENCE</span>
+        <span class="btn-loader"></span>
+    </button>
+
+    <!-- ENHANCED ARCHIVE HEADER -->
+    <header class="archive-header">
+        <h1 class="archive-title" data-text="PROJECT ARCHIVE">PROJECT ARCHIVE</h1>
+        <p class="archive-subtitle">TANAKA GIFT MUNDODZI | CYBER SYSTEMS</p>
+        <div class="header-code">
+            <span class="code-line">> SYSTEM INITIALIZED</span>
+            <span class="code-line">> ACCESS LEVEL:GUEST </span>
+            <span class="code-line">> LOADING PROJECT DATABASE...</span>
+        </div>
+    </header>
+	    <!-- PROJECTS CONTAINER -->
+    <div class="projects-container">
+        <!-- NEURAL OVERDRIVE PROJECT -->
+        <div class="project-card" data-modal="neural-modal">
+            <h2>NEURAL OVERDRIVE</h2>
+            <h3>Brain-Computer Interface Prototype</h3>
+            <p>Developing experimental neural interface that allows direct brain-to-computer communication for assistive technology applications.</p>
+            
+            <div class="achievements-grid">
+                <div class="achievement-item">96% accuracy in neural pattern recognition</div>
+                <div class="achievement-item">300ms response time for command execution</div>
+                <div class="achievement-item">Non-invasive EEG sensor array</div>
+                <div class="achievement-item">Machine learning adaptation algorithm</div>
+            </div>
+            
+            <div class="project-meta">
+                <span>Johannesburg, SA</span>
+                <span>2024-Present</span>
+            </div>
+            
+            <div class="project-tags">
+                <span class="tag purple">Neuroscience</span>
+                <span class="tag red">AI</span>
+                <span class="tag blue">Biotech</span>
+            </div>
+        </div>
+
+        <!-- QUANTUM LOCK PROJECT -->
+        <div class="project-card" data-modal="quantum-modal">
+            <h2>QUANTUM LOCK</h2>
+            <h3>Post-Quantum Cryptography</h3>
+            <p>Designed quantum-resistant encryption protocol to secure data against future quantum computing threats.</p>
+            
+            <div class="achievements-grid">
+                <div class="achievement-item">Lattice-based cryptographic foundation</div>
+                <div class="achievement-item">Tested against 128-qubit simulation</div>
+                <div class="achievement-item">40% faster than NIST candidates</div>
+                <div class="achievement-item">Hybrid classical-quantum key exchange</div>
+            </div>
+            
+            <div class="project-meta">
+                <span>Zurich Security Hub</span>
+                <span>2023-2024</span>
+            </div>
+            
+            <div class="project-tags">
+                <span class="tag blue">Quantum</span>
+                <span class="tag red">Security</span>
+                <span class="tag">Cryptography</span>
+            </div>
+        </div>
+
+        <!-- IT SPARK PROJECT -->
+        <div class="project-card" data-modal="it-spark-modal">
+            <h2>IT SPARK</h2>
+            <h3>Junior Student Mentorship Program</h3>
+            <p>Designed and implemented a mentorship program to spark junior students' interest in IT and provide them with a solid foundation in technical skills.</p>
+            
+            <div class="achievements-grid">
+                <div class="achievement-item">Developed customized curriculum for fundamental IT concepts</div>
+                <div class="achievement-item">Mentored 20 junior students with individualized support</div>
+                <div class="achievement-item">Created collaborative learning environment</div>
+            </div>
+            
+            <div class="project-meta">
+                <span>Midrand, South Africa</span>
+                <span>2022-2024</span>
+            </div>
+            
+            <div class="project-tags">
+                <span class="tag">Education</span>
+                <span class="tag">Mentorship</span>
+                <span class="tag red">IT Fundamentals</span>
+            </div>
+        </div>
+
+        <!-- TECHQUEST PROJECT -->
+        <div class="project-card" data-modal="techquest-modal">
+            <h2>TECHQUEST</h2>
+            <h3>IT Skills Development Program</h3>
+            <p>Developed and implemented a comprehensive IT skills development program to equip junior students with technical knowledge for the digital age.</p>
+            
+            <div class="achievements-grid">
+                <div class="achievement-item">Interactive workshops on hardware/software</div>
+                <div class="achievement-item">Created virtual learning platform</div>
+                <div class="achievement-item">Collaborated with industry experts</div>
+            </div>
+            
+            <div class="project-meta">
+                <span>Midrand, South Africa</span>
+                <span>2023-2024</span>
+            </div>
+            
+            <div class="project-tags">
+                <span class="tag">Workshops</span>
+                <span class="tag red">Technical Training</span>
+                <span class="tag">E-Learning</span>
+            </div>
+        </div>
+
+        <!-- CYBERSAFE PROJECT -->
+        <div class="project-card" data-modal="cybersafe-modal">
+            <h2>CYBERSAFE</h2>
+            <h3>Cybersecurity Awareness Program</h3>
+            <p>Designed cybersecurity awareness program to educate students about online safety, security threats, and protection best practices.</p>
+            
+            <div class="achievements-grid">
+                <div class="achievement-item">Comprehensive cybersecurity curriculum</div>
+                <div class="achievement-item">Interactive threat simulation workshops</div>
+                <div class="achievement-item">Industry expert collaboration</div>
+            </div>
+            
+            <div class="project-meta">
+                <span>Midrand, South Africa</span>
+                <span>2023</span>
+            </div>
+            
+            <div class="project-tags">
+                <span class="tag red">Security</span>
+                <span class="tag">Education</span>
+                <span class="tag">Workshops</span>
+            </div>
+        </div>
+
+        <!-- INNOLAB PROJECT -->
+        <div class="project-card" data-modal="innolab-modal">
+            <h2>INNOLAB</h2>
+            <h3>Digital Innovation Incubator</h3>
+            <p>Developed digital innovation incubator providing students a platform to design, develop, and launch innovative digital projects.</p>
+            
+            <div class="achievements-grid">
+                <div class="achievement-item">Created collaborative workspace</div>
+                <div class="achievement-item">Developed mentorship program</div>
+                <div class="achievement-item">Hosted hackathons and competitions</div>
+            </div>
+            
+            <div class="project-meta">
+                <span>Midrand, South Africa</span>
+                <span>2021-2022</span>
+            </div>
+            
+            <div class="project-tags">
+                <span class="tag">Innovation</span>
+                <span class="tag red">Entrepreneurship</span>
+                <span class="tag">Hackathons</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- CASE STUDY MODALS -->
+    <!-- NEURAL OVERDRIVE MODAL -->
+    <div id="neural-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>NEURAL OVERDRIVE</h2>
+                <h3>Brain-Computer Interface Prototype</h3>
+                <div class="modal-subtitle">Direct Neural Interface System v2.4</div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>SYSTEM OVERVIEW</h4>
+                <p>Neural Overdrive represents a breakthrough in non-invasive brain-computer interfaces, achieving unprecedented accuracy in interpreting neural signals for device control. The system combines advanced EEG sensors with machine learning algorithms to create a responsive, adaptive interface that learns individual users' neural patterns.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-item">TensorFlow Neural Networks</span>
+                    <span class="tech-item">High-Density EEG Array</span>
+                    <span class="tech-item">Real-time Signal Processing</span>
+                    <span class="tech-item">Adaptive Learning Engine</span>
+                    <span class="tech-item">Secure Neural API</span>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>TECHNICAL BREAKTHROUGHS</h4>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h5>Neural Decoding</h5>
+                        <p>Developing proprietary algorithms that can distinguish between 28 distinct mental commands with 96% accuracy</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Latency Reduction</h5>
+                        <p>Achieving 300ms response time through optimized signal processing pipelines</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Adaptive Learning</h5>
+                        <p>System will improve recognition accuracy by 2.4% per hour of use through continuous learning</p>
+                    </div>
+                </div>
+                
+                <h4>APPLICATION SCENARIOS</h4>
+                <ul>
+                    <li>Assistive technology for motor-impaired users</li>
+                    <li>Hands-free industrial control systems</li>
+                    <li>Enhanced virtual reality interaction</li>
+                    <li>Neurofeedback therapy applications</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>PERFORMANCE METRICS</h4>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h5>Accuracy</h5>
+                        <p>96.2% command recognition (tested with n=50 subjects)</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Latency</h5>
+                        <p>297ms average from thought to execution</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Adaptation</h5>
+                        <p>83% reduction in calibration time compared to v1.0</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Bandwidth</h5>
+                        <p>28 distinct commands simultaneously available</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- QUANTUM LOCK MODAL -->
+    <div id="quantum-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>QUANTUM LOCK</h2>
+                <h3>Post-Quantum Cryptography Framework</h3>
+                <div class="modal-subtitle">Quantum-Resistant Encryption Protocol v1.2</div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>CRYPTOGRAPHIC INNOVATION</h4>
+                <p>Quantum Lock addresses the imminent threat quantum computing poses to current encryption standards. Our lattice-based cryptographic system provides robust protection while maintaining performance suitable for real-world applications.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-item">Ring-LWE Cryptography</span>
+                    <span class="tech-item">NTRU Lattice Framework</span>
+                    <span class="tech-item">Quantum Random Oracle Model</span>
+                    <span class="tech-item">Hybrid Key Exchange</span>
+                    <span class="tech-item">Post-Quantum TLS</span>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>SECURITY ARCHITECTURE</h4>
+                <ul>
+                    <li>Lattice-based key exchange resistant to Shor's algorithm</li>
+                    <li>256-bit security level against quantum adversaries</li>
+                    <li>Hybrid mode compatible with existing RSA/ECC infrastructure</li>
+                    <li>Formally verified implementation in Rust</li>
+                </ul>
+                
+                <h4>PERFORMANCE BENCHMARKS</h4>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h5>Key Generation</h5>
+                        <p>1.8ms (vs 4.2ms for NIST PQC candidate)</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Encryption</h5>
+                        <p>0.9ms per 1KB (40% faster than Kyber)</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Decryption</h5>
+                        <p>1.1ms per 1KB (35% faster than NTRU)</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>QUANTUM RESISTANCE TESTING</h4>
+                <p>Tested against simulated quantum attacks using:</p>
+                <ul>
+                    <li>128-qubit quantum simulator (IBM Qiskit)</li>
+                    <li>Grover's algorithm implementation</li>
+                    <li>Hybrid quantum-classical attack models</li>
+                </ul>
+                
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h5>Brute Force Resistance</h5>
+                        <p>2^256 operations required for key compromise</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Quantum Advantage</h5>
+                        <p>No meaningful speedup observed with Shor's</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Projects Archive</title>
+    <style>
+        :root {
+            --neon-green: #00ff41;
+            --neon-purple: #9d00ff;
+            --neon-blue: #00a2ff;
+            --neon-red: #ff003c;
+            --dark-bg: #0a0a0a;
+            --darker-bg: #050505;
+            --terminal-text: #00ff41;
+            --terminal-bg: rgba(0, 0, 0, 0.8);
+            --card-bg: rgba(15, 15, 15, 0.7);
+            --glow: 0 0 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: white;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 65, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(157, 0, 255, 0.05) 0%, transparent 20%),
+                linear-gradient(to bottom, var(--darker-bg), var(--dark-bg));
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        .archive-header {
+            text-align: center;
+            padding: 2rem;
+            position: relative;
+            border-bottom: 1px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+            margin-bottom: 3rem;
+            background: var(--terminal-bg);
+        }
+
+        .archive-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--neon-green);
+            text-shadow: var(--glow) var(--neon-green);
+            letter-spacing: 0.2rem;
+            animation: flicker 3s infinite alternate;
+        }
+
+        .archive-header p {
+            color: var(--neon-blue);
+            font-size: 1.1rem;
+        }
+
+        /* Project Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--neon-purple);
+            border-radius: 5px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(157, 0, 255, 0.3);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, var(--neon-green), var(--neon-purple), var(--neon-blue), var(--neon-red));
+            background-size: 400%;
+            border-radius: 5px;
+            opacity: 0;
+            transition: 0.5s;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+            animation: animate-border 3s linear infinite;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(157, 0, 255, 0.5);
+        }
+
+        .project-card h3 {
+            color: var(--neon-green);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .project-card p {
+            color: #ccc;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .project-card .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .project-card .tech-tag {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--neon-green);
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            border: 1px solid var(--neon-green);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: var(--terminal-bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid var(--neon-green);
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 0 30px var(--neon-green);
+            animation: modalFadeIn 0.5s;
+        }
+
+        .close-modal {
+            color: var(--neon-red);
+            float: right;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-modal:hover {
+            text-shadow: var(--glow) var(--neon-red);
+            transform: rotate(90deg);
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--neon-purple);
+        }
+
+        .modal-header h2 {
+            color: var(--neon-green);
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            text-shadow: var(--glow) var(--neon-green);
+        }
+
+        .modal-header h3 {
+            color: var(--neon-blue);
+            font-size: 1.2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h4 {
+            color: var(--neon-purple);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            border-left: 3px solid var(--neon-purple);
+            padding-left: 0.5rem;
+        }
+
+        .modal-section p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .tech-item {
+            background: rgba(0, 162, 255, 0.1);
+            color: var(--neon-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+            border: 1px solid var(--neon-blue);
+            font-size: 0.8rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-item {
+            background: rgba(0, 255, 65, 0.05);
+            border: 1px solid var(--neon-green);
+            padding: 1rem;
+            border-radius: 3px;
+        }
+
+        .result-item h5 {
+            color: var(--neon-green);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .result-item p {
+            color: #bbb;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        /* Footer Styles */
+        .archive-footer {
+            background: var(--terminal-bg);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid var(--neon-green);
+            box-shadow: 0 0 20px var(--neon-green);
+        }
+
+        .terminal-output {
+            text-align: left;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--neon-green);
+            border-radius: 3px;
+        }
+
+        .terminal-line {
+            color: var(--terminal-text);
+            font-family: 'Courier New', monospace;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .status-active {
+            color: var(--neon-green);
+            text-shadow: var(--glow) var(--neon-green);
+            animation: pulse 2s infinite;
+        }
+
+        .cyber-logo {
+            margin: 1.5rem 0;
+        }
+
+        .archive-footer p {
+            color: var(--terminal-text);
+            margin-bottom: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        /* Return Button */
+        .return-container {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        #returnBtn {
+            background: var(--neon-purple);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 3px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px var(--neon-purple);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        #returnBtn:hover {
+            background: var(--neon-blue);
+            box-shadow: 0 0 25px var(--neon-blue);
+        }
+
+        .btn-loader {
+            display: none;
+            margin-left: 0.5rem;
+        }
+
+        .loading-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .loading-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        /* Animations */
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: var(--glow) var(--neon-green);
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes animate-border {
+            0% {
+                background-position: 0 0;
+            }
+            50% {
+                background-position: 400% 0;
+            }
+            100% {
+                background-position: 0 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                margin: 2% auto;
+                padding: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PROJECT ARCHIVE HEADER -->
+    <header class="archive-header">
+        <h1>PROJECT ARCHIVE</h1>
+        <p>CYBERSECURITY & TECHNOLOGY INITIATIVES</p>
+    </header>
+
+    <!-- PROJECT GRID -->
+    <div class="projects-grid">
+        <div class="project-card" data-modal="it-spark-modal">
+            <h3>IT SPARK</h3>
+            <p>Junior student mentorship program designed to ignite interest in technology through hands-on experience with fundamental IT concepts.</p>
+            <div class="tech-tags">
+                <span class="tech-tag">Curriculum Design</span>
+                <span class="tech-tag">Python</span>
+                <span class="tech-tag">Raspberry Pi</span>
+                <span class="tech-tag">Mentorship</span>
+            </div>
+        </div>
+
+        <div class="project-card" data-modal="cybersafe-modal">
+            <h3>CYBERSAFE</h3>
+            <p>Cybersecurity awareness program combining theoretical knowledge with practical simulations to teach security fundamentals.</p>
+            <div class="tech-tags">
+                <span class="tech-tag">Kali Linux</span>
+                <span class="tech-tag">Wireshark</span>
+                <span class="tech-tag">Metasploit</span>
+                <span class="tech-tag">Security</span>
+            </div>
+        </div>
+
+        <!-- Additional project cards can be added here -->
+    </div>
+
+    <!-- RETURN BUTTON -->
+    <div class="return-container">
+        <button id="returnBtn">
+            <span class="btn-text">INFORMATION TECHNOLOGY</span>
+            <span class="btn-loader"></span>
+        </button>
+    </div>
+
+    <!-- IT SPARK MODAL -->
+    <div id="it-spark-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>IT SPARK</h2>
+                <h3>Junior Student Mentorship Program</h3>
+            </div>
+            
+            <div class="modal-section">
+                <h4>PROJECT OVERVIEW</h4>
+                <p>The IT Spark program was designed to ignite interest in technology among junior students by providing hands-on experience with fundamental IT concepts. The program ran for 12 weeks with weekly sessions covering hardware, software, networking, and basic programming.</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-item">Curriculum Design</span>
+                    <span class="tech-item">Python</span>
+                    <span class="tech-item">Raspberry Pi</span>
+                    <span class="tech-item">Interactive Workshops</span>
+                    <span class="tech-item">Mentorship Framework</span>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>TECHNICAL IMPLEMENTATION</h4>
+                <p>Developed a modular curriculum with progressive difficulty levels:</p>
+                <ul>
+                    <li>Week 1-3: Hardware fundamentals with Raspberry Pi kits</li>
+                    <li>Week 4-6: Software concepts using Python turtle graphics</li>
+                    <li>Week 7-9: Networking basics with simulated environments</li>
+                    <li>Week 10-12: Capstone project combining all concepts</li>
+                </ul>
+                
+                <p>Created an adaptive learning platform that tracked student progress and suggested personalized learning paths based on performance metrics.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>KEY RESULTS</h4>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h5>Participation Growth</h5>
+                        <p>Increased from 5 to 20 students within 3 months through word-of-mouth recommendations</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Skill Improvement</h5>
+                        <p>85% of participants demonstrated measurable improvement in technical aptitude tests</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Long-term Impact</h5>
+                        <p>60% of participants pursued further IT education after program completion</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Community Building</h5>
+                        <p>Established ongoing peer mentorship network that continued after program ended</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CYBERSAFE MODAL -->
+    <div id="cybersafe-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <h2>CYBERSAFE</h2>
+                <h3>Cybersecurity Awareness Program</h3>
+            </div>
+            
+            <div class="modal-section">
+                <h4>PROGRAM DESIGN</h4>
+                <p>The Cybersafe program combined theoretical knowledge with practical simulations to teach cybersecurity fundamentals:</p>
+                
+                <div class="tech-stack">
+                    <span class="tech-item">Kali Linux</span>
+                    <span class="tech-item">Wireshark</span>
+                    <span class="tech-item">Metasploit</span>
+                    <span class="tech-item">Virtual Labs</span>
+                    <span class="tech-item">Phishing Simulations</span>
+                </div>
+                
+                <p>The curriculum covered ethical hacking principles, network defense strategies, and secure coding practices through hands-on labs.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>TECHNICAL COMPONENTS</h4>
+                <ul>
+                    <li>Custom-built vulnerable web applications for penetration testing practice</li>
+                    <li>Network traffic analysis exercises using packet captures</li>
+                    <li>Password cracking demonstrations with hashcat</li>
+                    <li>Social engineering defense workshops</li>
+                    <li>Secure coding challenges in Python and JavaScript</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>OUTCOMES</h4>
+                <div class="results-grid">
+                    <div class="result-item">
+                        <h5>Phishing Resilience</h5>
+                        <p>Reduced click-through rate on test emails from 42% to 8%</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Security Awareness</h5>
+                        <p>Pre/post-test scores improved by 73% on average</p>
+                    </div>
+                    <div class="result-item">
+                        <h5>Career Pathways</h5>
+                        <p>12 participants pursued cybersecurity certifications after program</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ENHANCED ARCHIVE FOOTER -->
+    <footer class="archive-footer">
+        <div class="terminal-output">
+            <div class="terminal-line">> SYSTEM DIAGNOSTICS COMPLETE</div>
+            <div class="terminal-line">> PROJECT DATABASE INTEGRITY: 100%</div>
+            <div class="terminal-line">> LAST UPDATE: <span id="current-date"></span></div>
+            <div class="terminal-line">> SYSTEM STATUS: <span class="status-active">ACTIVE</span></div>
+        </div>
+        <div class="cyber-logo">
+            <svg width="120" height="40" viewBox="0 0 120 40" fill="none">
+                <path d="M10 20 L30 5 L50 20 L70 5 L90 20 L110 5" stroke="#00ff41" stroke-width="2" stroke-linecap="round"/>
+                <path d="M10 25 L30 35 L50 25 L70 35 L90 25 L110 35" stroke="#00ff41" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </div>
+        <p>COPYRIGHT © 2025 TANAKA GIFT MUNDODZI - ALL RIGHTS RESERVED</p>
+        
+    </footer>
+
+    <script>
+        // Enhanced interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.project-card');
+            const returnBtn = document.getElementById('returnBtn');
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.close-modal');
+            
+            // Set current date in footer
+            const currentDate = new Date();
+            document.getElementById('current-date').textContent = currentDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+
+            // Enhanced return button functionality
+            returnBtn.addEventListener('click', function() {
+                const btnText = this.querySelector('.btn-text');
+                const btnLoader = this.querySelector('.btn-loader');
+                
+                btnText.textContent = 'INITIALIZING RETURN PROTOCOL...';
+                this.style.backgroundColor = 'var(--neon-purple)';
+                this.style.boxShadow = '0 0 30px var(--neon-purple)';
+                
+                // Create loading animation
+                btnLoader.innerHTML = '<span class="loading-dot"></span><span class="loading-dot"></span><span class="loading-dot"></span>';
+                btnLoader.style.display = 'inline-block';
+                
+                // Add system shutdown effects
+                document.body.style.animation = 'fadeOut 1.5s forwards';
+                
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 2000);
+            });
+            
+            // Card hover effects with sound simulation
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    // Add glitch effect
+                    if(Math.random() > 0.7) {
+                        this.style.borderColor = 'var(--neon-red)';
+                        setTimeout(() => {
+                            this.style.borderColor = 'var(--neon-purple)';
+                        }, 100);
+                    }
+                });
+                
+                // Click to open modal
+                card.addEventListener('click', function() {
+                    const modalId = this.getAttribute('data-modal');
+                    document.getElementById(modalId).style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Close modal functionality
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.closest('.modal').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', function(event) {
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Add keyboard escape functionality
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    modals.forEach(modal => {
+                        if (modal.style.display === 'block') {
+                            modal.style.display = 'none';
+                            document.body.style.overflow = 'auto';
+                        }
+                    });
+                }
+            });
+            
+            // Add terminal typing effect to footer
+            const terminalLines = document.querySelectorAll('.terminal-line');
+            terminalLines.forEach((line, index) => {
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                }, index * 300);
+            });
+        });
+    </script>
+</body>
+</html>
