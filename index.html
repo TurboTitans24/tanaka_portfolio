@@ -4,6 +4,231 @@
     <meta charset="UTF-8">
     <title>TANAKA CYBER PORTFOLIO</title>
     <style>
+        /* === CYBERPUNK LOADING SCREEN === */
+        #cyber-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0d0208;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            overflow: hidden;
+        }
+
+        .loading-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            opacity: 0.3;
+        }
+
+        .grid-line {
+            background: linear-gradient(transparent, rgba(0, 255, 65, 0.1), transparent);
+            width: 1px;
+            height: 100%;
+            justify-self: center;
+        }
+
+        .loading-core {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin-bottom: 50px;
+        }
+
+        .core-inner {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, transparent 30%, rgba(0, 255, 65, 0.1) 70%);
+            border: 2px solid rgba(0, 255, 65, 0.3);
+            animation: core-pulse 3s infinite alternate;
+        }
+
+        .core-pulse {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 65, 0.2) 0%, transparent 70%);
+            animation: core-expand 4s infinite;
+            opacity: 0;
+        }
+
+        .core-rings {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .ring {
+            position: absolute;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 50%;
+            animation: ring-rotate 6s infinite linear;
+        }
+
+        .ring:nth-child(1) {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .ring:nth-child(2) {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            animation-delay: -2s;
+            animation-direction: reverse;
+        }
+
+        .ring:nth-child(3) {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            animation-delay: -4s;
+        }
+
+        .loading-progress {
+            width: 300px;
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background-color: rgba(0, 255, 65, 0.1);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            position: absolute;
+            height: 100%;
+            width: 0;
+            background-color: #00ff41;
+            animation: progress-fill 3s forwards;
+        }
+
+        .progress-pulse {
+            position: absolute;
+            height: 100%;
+            width: 20px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+            animation: progress-pulse 2s infinite;
+            opacity: 0;
+        }
+
+        .progress-text {
+            color: #00ff41;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .progress-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #00ff41;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+        }
+
+        .loading-message {
+            color: #00ff41;
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            height: 24px;
+        }
+
+        .message-cursor {
+            animation: cursor-blink 1s infinite;
+        }
+
+        .loading-code {
+            color: rgba(0, 255, 65, 0.7);
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            width: 300px;
+            height: 100px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .code-line {
+            position: relative;
+            margin-bottom: 5px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: code-line-in 0.5s forwards;
+        }
+
+        .code-line:nth-child(1) { animation-delay: 0.5s; }
+        .code-line:nth-child(2) { animation-delay: 1s; }
+        .code-line:nth-child(3) { animation-delay: 1.5s; }
+        .code-line:nth-child(4) { animation-delay: 2s; }
+
+        /* Loading Animations */
+        @keyframes core-pulse {
+            0% { box-shadow: 0 0 10px rgba(0, 255, 65, 0.1); }
+            100% { box-shadow: 0 0 30px rgba(0, 255, 65, 0.3); }
+        }
+
+        @keyframes core-expand {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+
+        @keyframes ring-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes progress-fill {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        @keyframes progress-pulse {
+            0% { left: 0; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { left: 100%; opacity: 0; }
+        }
+
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes code-line-in {
+            0% { opacity: 0; transform: translateX(-20px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+
         /* === CYBERSPACE STYLING === */
         body {
             background-color: #0d0208;
@@ -442,6 +667,51 @@
     </style>
 </head>
 <body>
+    <!-- CYBERPUNK LOADING SCREEN -->
+    <div id="cyber-loading">
+        <div class="loading-grid">
+            <div class="grid-line"></div>
+            <div class="grid-line"></div>
+            <div class="grid-line"></div>
+            <div class="grid-line"></div>
+        </div>
+        
+        <div class="loading-core">
+            <div class="core-pulse"></div>
+            <div class="core-inner"></div>
+            <div class="core-rings">
+                <div class="ring"></div>
+                <div class="ring"></div>
+                <div class="ring"></div>
+            </div>
+        </div>
+        
+        <div class="loading-progress">
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+                <div class="progress-pulse"></div>
+            </div>
+            <div class="progress-text">INITIALIZING SYSTEM...</div>
+            <div class="progress-stats">
+                <span class="stat">MEMORY: <span id="mem-stat">0</span>%</span>
+                <span class="stat">CPU: <span id="cpu-stat">0</span>%</span>
+                <span class="stat">GPU: <span id="gpu-stat">0</span>%</span>
+            </div>
+        </div>
+        
+        <div class="loading-message">
+            <span class="message-text">ACCESSING TANAKA SYSTEMS...</span>
+            <span class="message-cursor">_</span>
+        </div>
+        
+        <div class="loading-code">
+            <div class="code-line">> INITIALIZING CYBER CORE...</div>
+            <div class="code-line">> LOADING NEURAL INTERFACE...</div>
+            <div class="code-line">> ESTABLISHING DATALINK...</div>
+            <div class="code-line">> VERIFYING CRYPTO KEYS...</div>
+        </div>
+    </div>
+
     <!-- BINARY RAIN BACKGROUND -->
     <div class="binary-rain"></div>
 
@@ -584,6 +854,70 @@
     </footer>
 
     <script>
+        // Loading screen functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loadingScreen = document.getElementById('cyber-loading');
+            const memStat = document.getElementById('mem-stat');
+            const cpuStat = document.getElementById('cpu-stat');
+            const gpuStat = document.getElementById('gpu-stat');
+            
+            // Simulate system stats
+            let statsInterval = setInterval(() => {
+                memStat.textContent = Math.min(100, Math.floor(parseInt(memStat.textContent) + Math.random() * 10));
+                cpuStat.textContent = Math.min(100, Math.floor(parseInt(cpuStat.textContent) + Math.random() * 8));
+                gpuStat.textContent = Math.min(100, Math.floor(parseInt(gpuStat.textContent) + Math.random() * 5));
+            }, 200);
+            
+            // Change loading messages
+            const messages = [
+                "DECRYPTING DATA STREAM...",
+                "SYNCING NEURAL NETWORK...",
+                "ESTABLISHING SECURE LINK...",
+                "LOADING CYBER COMPONENTS...",
+                "INITIALIZING USER INTERFACE..."
+            ];
+            
+            let messageIndex = 0;
+            const messageElement = document.querySelector('.message-text');
+            setInterval(() => {
+                messageIndex = (messageIndex + 1) % messages.length;
+                messageElement.textContent = messages[messageIndex];
+            }, 2500);
+            
+            // Add random glitch effect
+            setInterval(() => {
+                if(Math.random() > 0.7) {
+                    loadingScreen.style.transform = 'translateX(' + (Math.random() * 4 - 2) + 'px)';
+                    setTimeout(() => {
+                        loadingScreen.style.transform = 'translateX(0)';
+                    }, 100);
+                }
+            }, 3000);
+            
+            // Hide loading screen after everything is loaded
+            window.addEventListener('load', function() {
+                // Add a slight delay for dramatic effect
+                setTimeout(() => {
+                    loadingScreen.style.opacity = '0';
+                    loadingScreen.style.transition = 'opacity 0.5s ease-out';
+                    
+                    setTimeout(() => {
+                        loadingScreen.style.display = 'none';
+                        clearInterval(statsInterval);
+                        
+                        // Start all your existing animations
+                        updateBinaryDisplays();
+                        setInterval(updateBinaryDisplays, 100);
+                        animateTechText();
+                        
+                        document.querySelectorAll('.skill-fill, .dna-node').forEach(el => {
+                            el.style.animationPlayState = 'running';
+                        });
+                    }, 500);
+                }, 1000);
+            });
+        });
+
         // Generate random binary string
         function generateBinary(length) {
             let result = '';
@@ -667,51 +1001,140 @@
                 box.addEventListener('click', function() {
                     // Add click effect
                     this.style.animation = 'none';
-                    this.style.transform = 'scale(0.95)';
+                    this.style.transform =                    this.style.transform = 'translateY(-5px) scale(0.98)';
+                    this.style.boxShadow = '0 0 25px #00ff41';
+                    
                     setTimeout(() => {
                         this.style.animation = 'pulse-glow 4s infinite';
-                        this.style.transform = '';
-                    }, 300);
+                        this.style.transform = 'translateY(-5px)';
+                        this.style.boxShadow = '0 0 15px #00ff41';
+                    }, 200);
                 });
             });
 
-            // Add dynamic effects to cyber footer
-            const cyberShock = document.querySelector('.cyber-shock');
-            const accessText = document.querySelector('.access-denied');
+            // Add hover effect for skills
+            document.querySelectorAll('.skill').forEach(skill => {
+                skill.addEventListener('mouseenter', function() {
+                    this.style.boxShadow = '0 0 15px #00ff41';
+                    this.style.transform = 'translateY(-3px)';
+                });
+                
+                skill.addEventListener('mouseleave', function() {
+                    this.style.boxShadow = 'none';
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+
+        // Binary rain effect
+        function createBinaryRain() {
+            const binaryRain = document.querySelector('.binary-rain');
+            const columns = Math.floor(window.innerWidth / 20);
+            let binaryText = '';
             
-            // Randomly change the warning text
-            const warnings = [
-                "OPEN FOR COLLABORATION",
-                "DIGITAL DOORS UNLOCKED",
-                "TOGETHER IN CODE",
-                "TANAKA SYSTEMS",
-                "WELCOME TO THE NETWORK"
-            ];
+            for (let i = 0; i < columns; i++) {
+                binaryText += `<div style="position:absolute; top:0; left:${i * 20}px; width:20px; color:#00ff41; opacity:${Math.random() * 0.3 + 0.1};">`;
+                
+                const rows = Math.floor(window.innerHeight / 20);
+                for (let j = 0; j < rows; j++) {
+                    binaryText += `<div style="position:absolute; top:${j * 20}px;">${Math.random() > 0.5 ? '1' : '0'}</div>`;
+                }
+                
+                binaryText += '</div>';
+            }
             
+            binaryRain.innerHTML = binaryText;
+            
+            // Animate the binary rain
+            const binaryElements = binaryRain.querySelectorAll('div > div');
             setInterval(() => {
-                // Random warning text
-                accessText.textContent = warnings[Math.floor(Math.random() * warnings.length)];
+                binaryElements.forEach(el => {
+                    if (Math.random() > 0.9) {
+                        el.textContent = Math.random() > 0.5 ? '1' : '0';
+                    }
+                });
+            }, 100);
+        }
+
+        // Initialize binary rain
+        createBinaryRain();
+
+        // Responsive adjustments
+        window.addEventListener('resize', function() {
+            createBinaryRain();
+        });
+
+        // Add terminal typing effect
+        function typeTerminalText() {
+            const terminals = document.querySelectorAll('.terminal');
+            
+            terminals.forEach(terminal => {
+                const lines = terminal.querySelectorAll('p');
+                let delay = 0;
                 
-                // Random color flash
-                if(Math.random() > 0.7) {
-                    accessText.style.color = `hsl(${Math.random() * 120 + 100}, 100%, 50%)`;
-                    setTimeout(() => {
-                        accessText.style.color = '#ff073a';
-                    }, 200);
+                lines.forEach(line => {
+                    const originalText = line.textContent;
+                    line.textContent = '';
+                    
+                    const textArray = originalText.split('');
+                    textArray.forEach((char, index) => {
+                        setTimeout(() => {
+                            line.textContent += char;
+                            
+                            // Add cursor effect
+                            if (index === textArray.length - 1) {
+                                const cursor = document.createElement('span');
+                                cursor.className = 'terminal-cursor';
+                                cursor.textContent = '_';
+                                line.appendChild(cursor);
+                                
+                                // Blink cursor
+                                setInterval(() => {
+                                    cursor.style.visibility = cursor.style.visibility === 'hidden' ? 'visible' : 'hidden';
+                                }, 500);
+                            }
+                        }, delay + index * 30);
+                    });
+                    
+                    delay += textArray.length * 30 + 500;
+                });
+            });
+        }
+
+        // Start terminal typing effect after loading
+        setTimeout(typeTerminalText, 1500);
+
+        // Add glitch effect to name header occasionally
+        setInterval(() => {
+            const nameHeader = document.querySelector('.name-header');
+            if (Math.random() > 0.8) {
+                nameHeader.style.animation = 'glitch 0.5s linear';
+                setTimeout(() => {
+                    nameHeader.style.animation = 'glitch 3s infinite alternate';
+                }, 500);
+            }
+        }, 3000);
+
+        // Add interactive DNA effect
+        document.querySelector('.dna-container').addEventListener('mousemove', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const nodes = this.querySelectorAll('.dna-node');
+            nodes.forEach(node => {
+                const nodeX = parseInt(node.style.left) / 100 * rect.width;
+                const nodeY = parseInt(node.style.top) / 100 * rect.height;
+                const distance = Math.sqrt(Math.pow(x - nodeX, 2) + Math.pow(y - nodeY, 2));
+                
+                if (distance < 50) {
+                    node.style.transform = `scale(${1.5 - distance/100})`;
+                    node.style.boxShadow = `0 0 ${20 - distance/5}px #00ff41`;
+                } else {
+                    node.style.transform = 'scale(1)';
+                    node.style.boxShadow = '0 0 10px #00ff41';
                 }
-                
-                // Random pulse effect
-                if(Math.random() > 0.8) {
-                    const pulse = document.createElement('div');
-                    pulse.className = 'cyber-pulse';
-                    pulse.style.animation = 'pulse 2s forwards';
-                    cyberShock.appendChild(pulse);
-                    setTimeout(() => {
-                        pulse.remove();
-                    }, 2000);
-                }
-                
-            }, 3000);
+            });
         });
     </script>
 </body>
