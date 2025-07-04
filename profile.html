@@ -1058,4 +1058,18 @@
             overlay.style.background = 'linear-gradient(to bottom, rgba(0, 255, 65, 0.2) 0%, transparent 20%, transparent 80%, rgba(0, 255, 65, 0.2) 100%)';
         });
 
-        profileImage.addEventListener('mouse
+                // IMAGE HOVER EFFECT
+        const profileImage = document.querySelector('.profile-image');
+        profileImage.addEventListener('mouseover', () => {
+            const overlay = document.querySelector('.image-overlay');
+            overlay.style.background = 'linear-gradient(to bottom, rgba(0, 255, 65, 0.2) 0%, transparent 20%, transparent 80%, rgba(0, 255, 65, 0.2) 100%)';
+            overlay.style.opacity = '0.8';
+            profileImage.style.filter = 'sepia(30%) hue-rotate(60deg) contrast(115%) brightness(1.1)';
+        });
+        
+        profileImage.addEventListener('mouseout', () => {
+            const overlay = document.querySelector('.image-overlay');
+            overlay.style.background = 'linear-gradient(to bottom, rgba(0, 255, 65, 0.1) 0%, transparent 20%, transparent 80%, rgba(0, 255, 65, 0.1) 100%)';
+            overlay.style.opacity = '1';
+            profileImage.style.filter = 'sepia(100%) hue-rotate(70deg) contrast(120%) brightness(0.8)';
+        });
