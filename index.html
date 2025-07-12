@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome | Tanaka Gift Mundodzi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        /* === GLOBAL STYLES === */
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #0f3460;
+            --accent-color: #3d7ea6;
+            --highlight-color: #e9c46a;
+            --text-color: #333;
+            --light-bg: #f8f9fa;
+            --dark-bg: #e9ecef;
+            --border-color: #dee2e6;
+            --card-bg: #ffffff;
+            --footer-bg: #16213e;
+        }
+
+        /* Dark mode variables */
+        .dark-mode {
+            --primary-color: #e9c46a;
+            --secondary-color: #3d7ea6;
+            --accent-color: #e9c46a;
+            --highlight-color: #3d7ea6;
+            --text-color: #f8f9fa;
+            --light-bg: #121212;
+            --dark-bg: #1e1e1e;
+            --border-color: #333;
+            --card-bg: #1e1e1e;
+            --footer-bg: #0a0a1a;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary-color);
+            border-radius: 10px;
+            border: 2px solid var(--light-bg);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            background-color: var(--light-bg);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background-color 0.5s ease, color 0.5s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* === WELCOME CONTAINER === */
+        .welcome-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            position: relative;
+            overflow: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .welcome-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23e9c46a" stroke-width="0.3" fill="none" opacity="0.15"/></svg>');
+            opacity: 0.3;
+            animation: moveBackground 60s linear infinite;
+        }
+
+        /* === WELCOME CARD === */
+        .welcome-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            max-width: 600px;
+            width: calc(100% - 2rem);
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            overflow: hidden;
+            margin: 1rem;
+            backface-visibility: hidden;
+        }
+
+        .welcome-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--highlight-color), var(--accent-color));
+        }
+
+        .welcome-card:hover {
+            transform: translateY(-10px) rotateY(5deg) rotateX(2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* === FORM STYLES === */
+        .welcome-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            -webkit-appearance: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(61, 126, 166, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        /* === BUTTON STYLES === */
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent-color) 0%, var(--highlight-color) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .submit-btn:hover, .submit-btn:active {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover::after {
+            left: 100%;
+        }
+
+        /* === HEADER STYLES === */
+        .welcome-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-title {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+            animation: textGlow 3s ease-in-out infinite alternate;
+        }
+
+        .welcome-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--highlight-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        .welcome-subtitle {
+            color: var(--text-color);
+            font-size: 1.1rem;
+            opacity: 0.8;
+            animation: fadeIn 2s ease-in-out;
+        }
+        /* Enhanced Select Dropdown */
+select.form-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 16px;
+    padding-right: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+}
+
+/* Dark mode arrow color */
+.dark-mode select.form-input {
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f8f9fa'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+}
+
+/* Focus state */
+select.form-input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(61, 126, 166, 0.2);
+    outline: none;
+}
+
+/* Hover effect */
+select.form-input:hover {
+    border-color: var(--accent-color);
+}
+
+/* Custom scrollbar for dropdown */
+select.form-input::-webkit-scrollbar {
+    width: 8px;
+}
+
+select.form-input::-webkit-scrollbar-track {
+    background: var(--light-bg);
+    border-radius: 10px;
+}
+
+select.form-input::-webkit-scrollbar-thumb {
+    background: var(--secondary-color);
+    border-radius: 10px;
+}
+
+/* Option styling */
+select.form-input option {
+    padding: 12px 15px;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    transition: all 0.2s ease;
+}
+
+select.form-input option:hover {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+}
+
+select.form-input option:checked {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+/* Animated border effect */
+.select-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--highlight-color), var(--accent-color));
+    transition: width 0.3s ease;
+}
+
+.select-wrapper:focus-within::after {
+    width: 100%;
+}
+
+/* For mobile devices */
+@media (max-width: 768px) {
+    select.form-input {
+        padding: 12px 15px;
+        padding-right: 40px;
+        font-size: 16px;
+    }
+}
+select.form-input:focus {
+    animation: inputGlow 2s infinite alternate;
+}
+
+@keyframes inputGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(61, 126, 166, 0.2);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(61, 126, 166, 0.4);
+    }
+}
+/* Style the dropdown options container */
+select.form-input option {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 12px 15px;
+    transition: all 0.2s ease;
+}
+
+/* Hover state for options */
+select.form-input option:hover {
+    background-color: var(--accent-color) !important;
+    color: white !important;
+    transform: translateX(5px);
+}
+
+/* Selected option styling */
+select.form-input option:checked {
+    background-color: var(--secondary-color);
+    color: white;
+    font-weight: 600;
+    position: relative;
+}
+
+/* Focused option styling */
+select.form-input option:focus {
+    outline: none;
+    background-color: var(--highlight-color);
+    color: var(--primary-color);
+}
+        /* === DECORATION ELEMENTS === */
+        .tech-bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 1rem;
+            box-shadow: 0 0 15px rgba(233, 196, 106, 0.3);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            animation: floatBubble linear infinite;
+            opacity: 0.8;
+            pointer-events: none;
+            z-index: 0;
+            touch-action: none;
+        }
+
+        .tech-bubble:hover, .tech-bubble:active {
+            transform: scale(1.3);
+            opacity: 1;
+            animation-play-state: paused;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--highlight-color);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+            touch-action: none;
+        }
+
+        /* === ANIMATED BACKGROUND ELEMENTS === */
+        .connection-line {
+            position: absolute;
+            background: linear-gradient(to right, var(--highlight-color), var(--accent-color));
+            height: 1px;
+            transform-origin: left center;
+            z-index: 0;
+            opacity: 0.3;
+            touch-action: none;
+        }
+
+        .pulse-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--highlight-color);
+            animation: pulse 2s infinite;
+            z-index: 0;
+            touch-action: none;
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes moveBackground {
+            from { background-position: 0 0; }
+            to { background-position: 100px 100px; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes floatBubble {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+            }
+        }
+
+        @keyframes textGlow {
+            0% {
+                text-shadow: 0 0 5px rgba(233, 196, 106, 0.3);
+            }
+            100% {
+                text-shadow: 0 0 10px rgba(233, 196, 106, 0.5);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(233, 196, 106, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 8px rgba(233, 196, 106, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(233, 196, 106, 0);
+            }
+        }
+
+        /* Individual bubble styles */
+        .bubble-1 { width: 35px; height: 35px; animation-duration: 20s; left: 10%; top: 20%; }
+        .bubble-2 { width: 25px; height: 25px; animation-duration: 25s; left: 25%; top: 40%; }
+        .bubble-3 { width: 40px; height: 40px; animation-duration: 30s; left: 40%; top: 60%; }
+        .bubble-4 { width: 30px; height: 30px; animation-duration: 35s; left: 55%; top: 30%; }
+        .bubble-5 { width: 35px; height: 35px; animation-duration: 40s; left: 70%; top: 50%; }
+        .bubble-6 { width: 25px; height: 25px; animation-duration: 45s; left: 85%; top: 70%; }
+		.bubble-7 { width: 28px; height: 28px; animation-duration: 22s; left: 15%; top: 15%; }
+		.bubble-8 { width: 32px; height: 32px; animation-duration: 26s; left: 30%; top: 25%; }
+		.bubble-9 { width: 30px; height: 30px; animation-duration: 24s; left: 45%; top: 35%; }
+		
+
+        /* Mobile-specific styles */
+        .mobile-tap-hint {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            opacity: 0.7;
+            z-index: 100;
+            animation: pulse 2s infinite;
+        }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            .welcome-card {
+                padding: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            }
+
+            .welcome-title {
+                font-size: 1.8rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 1rem;
+            }
+
+            .form-input, .submit-btn {
+                padding: 0.8rem;
+            }
+
+            .submit-btn {
+                padding: 0.8rem 1.5rem;
+            }
+
+            /* Reduce animation intensity on mobile */
+            .tech-bubble {
+                animation-duration: 40s !important;
+                opacity: 0.6;
+            }
+
+            .mobile-tap-hint {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-card {
+                padding: 1.2rem;
+                margin: 0.5rem;
+                width: calc(100% - 1rem);
+            }
+
+            .welcome-title {
+                font-size: 1.6rem;
+            }
+
+            .welcome-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .welcome-form {
+                gap: 1rem;
+            }
+
+            /* Further reduce decorative elements on very small screens */
+            .tech-bubble {
+                display: none;
+            }
+
+            .connection-line, .pulse-dot {
+                display: none;
+            }
+        }
+
+        /* Disable hover effects on touch devices */
+        @media (hover: none) {
+            .welcome-card:hover {
+                transform: none;
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            }
+
+            .tech-bubble:hover, .tech-bubble:active {
+                transform: none;
+                animation-play-state: running;
+            }
+
+            .submit-btn:hover::after {
+                left: -60%;
+            }
+        }
+		/* Add to your media queries */
+@media (max-width: 480px) {
+    select.form-input {
+        appearance: none;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23333'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 24px;
+        padding-right: 40px;
+    }
+    
+    .dark-mode select.form-input {
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23f8f9fa'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    }
+}
+/* Add to your existing styles */
+@media (hover: none) {
+    .submit-btn:active {
+        transform: scale(0.98);
+        opacity: 0.9;
+    }
+}
+/* Add to your 480px media query */
+@media (max-width: 480px) {
+    body {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+    }
+    
+    .form-input, .submit-btn {
+        font-size: 16px; /* Prevent iOS zooming */
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Floating Tech Bubbles -->
+    <div class="tech-bubble bubble-1"><i class="fab fa-html5"></i></div>
+    <div class="tech-bubble bubble-2"><i class="fab fa-css3-alt"></i></div>
+    <div class="tech-bubble bubble-3"><i class="fab fa-js"></i></div>
+    <div class="tech-bubble bubble-4"><i class="fab fa-python"></i></div>
+    <div class="tech-bubble bubble-5"><i class="fas fa-database"></i></div>
+    <div class="tech-bubble bubble-6"><i class="fab fa-git-alt"></i></div>
+	<div class="tech-bubble bubble-28"><i class="fab fa-ubuntu"></i></div>
+	<div class="tech-bubble bubble-33"><i class="fab fa-android"></i></div>
+	<div class="tech-bubble bubble-48"><i class="fas fa-brain"></i></div>
+
+    <!-- Mobile tap hint -->
+    <div class="mobile-tap-hint">Tap to interact</div>
+
+    <!-- Welcome Container -->
+    <div class="welcome-container">
+        <div class="welcome-card">
+            <div class="welcome-header">
+                <h1 class="welcome-title">Welcome Explorer</h1>
+                <p class="welcome-subtitle">Share your thoughts before entering my digital space</p>
+            </div>
+
+            <form id="welcomeForm" class="welcome-form">
+                <div class="form-group">
+                    <label for="name" class="form-label">What should I call you?</label>
+                    <input type="text" id="name" class="form-input" placeholder="Your name or nickname" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="purpose" class="form-label">What brings you here today?</label>
+                    <select id="purpose" class="form-input" required>
+                        <option value="" disabled selected>Select your purpose</option>
+                        <option value="collaboration">Potential Collaboration</option>
+                        <option value="employment">Employment Opportunity</option>
+                        <option value="networking">Professional Networking</option>
+                        <option value="inspiration">Seeking Inspiration</option>
+                        <option value="other">Just Exploring</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message" class="form-label">Leave a creative message or your email address.</label>
+                    <textarea id="message" class="form-input form-textarea" placeholder="Your thoughts..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <span class="btn-text">Enter My Portfolio</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Detect touch device
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0;
+        
+        // Form submission handler
+        document.getElementById('welcomeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const purpose = document.getElementById('purpose').value;
+            const message = document.getElementById('message').value;
+            
+            // Create the email body
+            const emailBody = `New Portfolio Visitor:
+Name: ${name}
+Purpose: ${purpose}
+Message: ${message || 'No message provided'}`;
+            
+            // Send email (using Formspree or similar service)
+            fetch('https://formspree.io/f/xeokywgq', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,
+                    purpose: purpose,
+                    message: message,
+                    _subject: 'New Portfolio Visitor',
+                    _replyto: 'noreply@portfolio.com'
+                })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Create celebration particles before redirect
+                    createCelebrationParticles();
+                    setTimeout(() => {
+                        window.location.href = 'home.html';
+                    }, 1500);
+                } else {
+                    alert('There was an issue submitting your information. You will still be redirected.');
+                    window.location.href = 'home.html';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Connection issue. You will still be redirected.');
+                window.location.href = 'home.html';
+            });
+        });
+
+        // Create celebration particles
+        function createCelebrationParticles() {
+            const colors = ['#e9c46a', '#3d7ea6', '#ffffff'];
+            const card = document.querySelector('.welcome-card');
+            
+            for (let i = 0; i < (isTouchDevice ? 30 : 50); i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random properties
+                const size = Math.random() * (isTouchDevice ? 8 : 10) + 5;
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.backgroundColor = color;
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.opacity = Math.random() * 0.8 + 0.2;
+                
+                // Animation
+                const angle = Math.random() * Math.PI * 2;
+                const velocity = Math.random() * (isTouchDevice ? 3 : 5) + 5;
+                const x = Math.cos(angle) * velocity;
+                const y = Math.sin(angle) * velocity;
+                
+                particle.style.transform = `translate(${x}px, ${y}px)`;
+                particle.style.transition = `transform ${isTouchDevice ? '0.8s' : '1s'} ease-out, opacity ${isTouchDevice ? '0.8s' : '1s'} ease-out`;
+                
+                card.appendChild(particle);
+                
+                // Animate out
+                setTimeout(() => {
+                    particle.style.transform = `translate(${x * 5}px, ${y * 5}px)`;
+                    particle.style.opacity = '0';
+                    
+                    // Remove after animation
+                    setTimeout(() => {
+                        particle.remove();
+                    }, isTouchDevice ? 800 : 1000);
+                }, 50);
+            }
+        }
+
+        // Create interactive connection lines
+        function createConnectionLines() {
+            const container = document.querySelector('.welcome-container');
+            
+            // Create connection lines (fewer on mobile)
+            for (let i = 0; i < (isTouchDevice ? 3 : 5); i++) {
+                const line = document.createElement('div');
+                line.classList.add('connection-line');
+                
+                // Random properties
+                const length = Math.random() * (isTouchDevice ? 150 : 200) + 100;
+                const angle = Math.random() * 360;
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 5;
+                
+                line.style.width = `${length}px`;
+                line.style.left = `${left}%`;
+                line.style.top = `${top}%`;
+                line.style.transform = `rotate(${angle}deg)`;
+                line.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(line);
+            }
+            
+            // Create pulse dots (fewer on mobile)
+            for (let i = 0; i < (isTouchDevice ? 2 : 3); i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('pulse-dot');
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const delay = Math.random() * 2;
+                
+                dot.style.left = `${left}%`;
+                dot.style.top = `${top}%`;
+                dot.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(dot);
+            }
+        }
+
+        // Create additional floating tech bubbles
+        function createTechBubbles() {
+            const techIcons = [
+                '<i class="fab fa-html5"></i>',
+                '<i class="fab fa-css3-alt"></i>',
+                '<i class="fab fa-js"></i>',
+                '<i class="fab fa-python"></i>',
+                '<i class="fas fa-database"></i>',
+                '<i class="fab fa-git-alt"></i>',
+                '<i class="fab fa-react"></i>',
+                '<i class="fab fa-node-js"></i>',
+                '<i class="fab fa-aws"></i>',
+                '<i class="fas fa-shield-alt"></i>',
+                '<i class="fab fa-java"></i>',
+                '<i class="fab fa-kubernetes"></i>',
+                '<i class="fab fa-trello"></i>'
+            ];
+            
+            // Create additional bubbles (fewer on mobile)
+            for (let i = 0; i < (isTouchDevice ? 8 : 15); i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'tech-bubble';
+                
+                // Random properties
+                const size = Math.random() * (isTouchDevice ? 25 : 30) + 20;
+                const left = Math.random() * 100;
+                const duration = Math.random() * (isTouchDevice ? 40 : 30) + 20;
+                const delay = Math.random() * 10;
+                const opacity = Math.random() * 0.6 + 0.2;
+                
+                // Random tech icon
+                const randomIcon = techIcons[Math.floor(Math.random() * techIcons.length)];
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${left}%`;
+                bubble.style.top = `${Math.random() * 100}%`;
+                bubble.style.animationDuration = `${duration}s`;
+                bubble.style.animationDelay = `${delay}s`;
+                bubble.style.opacity = opacity;
+                bubble.innerHTML = randomIcon;
+                
+                document.body.appendChild(bubble);
+            }
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', function() {
+            createTechBubbles();
+            createConnectionLines();
+            
+            // Add hover effect to form labels
+            const labels = document.querySelectorAll('.form-label');
+            labels.forEach(label => {
+                label.addEventListener('mouseenter', () => {
+                    if (!isTouchDevice) {
+                        label.style.transform = 'translateX(5px)';
+                        label.style.color = 'var(--accent-color)';
+                    }
+                });
+                label.addEventListener('mouseleave', () => {
+                    if (!isTouchDevice) {
+                        label.style.transform = 'translateX(0)';
+                        label.style.color = 'var(--primary-color)';
+                    }
+                });
+                
+                // Add touch effect for mobile
+                if (isTouchDevice) {
+                    label.addEventListener('touchstart', () => {
+                        label.style.color = 'var(--accent-color)';
+                    });
+                    label.addEventListener('touchend', () => {
+                        setTimeout(() => {
+                            label.style.color = 'var(--primary-color)';
+                        }, 200);
+                    });
+                }
+            });
+            
+            // Add touch feedback for submit button
+            const submitBtn = document.querySelector('.submit-btn');
+            if (isTouchDevice) {
+                submitBtn.addEventListener('touchstart', () => {
+                    submitBtn.style.transform = 'translateY(1px)';
+                });
+                submitBtn.addEventListener('touchend', () => {
+                    submitBtn.style.transform = 'translateY(0)';
+                });
+            }
+        });
+
+        // Mouse move parallax effect (only for non-touch devices)
+        if (!isTouchDevice) {
+            document.addEventListener('mousemove', function(e) {
+                const card = document.querySelector('.welcome-card');
+                const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+                const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+                card.style.transform = `translateY(-10px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+            });
+        } else {
+            // Add subtle tilt effect on mobile when tapping
+            const card = document.querySelector('.welcome-card');
+            card.addEventListener('touchstart', () => {
+                card.style.transform = 'translateY(-5px) rotateY(2deg) rotateX(1deg)';
+            });
+            card.addEventListener('touchend', () => {
+                card.style.transform = 'translateY(0) rotateY(0) rotateX(0)';
+            });
+        }
+
+        // Prevent zooming on double-tap
+        document.addEventListener('dblclick', function(e) {
+            if (isTouchDevice) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+        // Better handling of select dropdowns on mobile
+        if (isTouchDevice) {
+            document.querySelectorAll('select').forEach(select => {
+                select.addEventListener('touchstart', function(e) {
+                    e.stopPropagation();
+                });
+            });
+        }
+		// Add this to your script to improve mobile form input
+document.querySelectorAll('.form-input').forEach(input => {
+    if (isTouchDevice) {
+        // Add larger tap targets on mobile
+        input.style.minHeight = '44px'; // Apple recommends at least 44px
+        input.style.padding = '12px 16px';
+        
+        // Prevent zooming on focus but maintain readability
+        input.addEventListener('focus', () => {
+            if (window.innerWidth <= 768) {
+                document.body.style.transform = 'scale(1)';
+                document.body.style.transformOrigin = 'center top';
+            }
+        });
+    }
+});
+// Add this to prevent layout shifts when keyboard appears
+if (isTouchDevice) {
+    const form = document.getElementById('welcomeForm');
+    form.addEventListener('focusin', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
+            setTimeout(() => {
+                e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+        }
+    });
+}
+// Add to your existing event listeners
+document.addEventListener('touchmove', function(e) {
+    if (e.target.tagName === 'SELECT') {
+        e.preventDefault();
+    }
+}, { passive: false });
+    </script>
+</body>
+</html>

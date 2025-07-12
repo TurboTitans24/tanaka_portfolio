@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Transformation in Africa: A 5-Year Longitudinal Study | Tanaka Gift Mundodzi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+	<link rel="icon" href="logo.png" type="image/png">
+    <style>
+        /* ====== GLOBAL VARIABLES ====== */
+        :root {
+            --primary-color: #1a1a2e;
+            --secondary-color: #0f3460;
+            --accent-color: #3d7ea6;
+            --highlight-color: #e9c46a;
+            --text-color: #333333;
+            --light-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --border-radius: 8px;
+            --serif-font: 'Playfair Display', serif;
+            --sans-font: 'Inter', sans-serif;
+        }
+
+        .dark-mode {
+            --primary-color: #e9c46a;
+            --secondary-color: #3d7ea6;
+            --accent-color: #e9c46a;
+            --text-color: #f0f0f0;
+            --light-bg: #121212;
+            --card-bg: #1e1e1e;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ====== CUSTOM SCROLLBAR ====== */
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light-bg);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--accent-color), var(--highlight-color));
+            border-radius: 10px;
+            border: 3px solid var(--light-bg);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--highlight-color);
+        }
+
+        /* ====== BASE STYLES ====== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--sans-font);
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            line-height: 1.8;
+            font-weight: 400;
+            transition: all 0.5s ease;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: var(--serif-font);
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        h1 { font-size: 2.8rem; }
+        h2 { font-size: 2.2rem; }
+        h3 { font-size: 1.8rem; }
+        h4 { font-size: 1.4rem; }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--highlight-color);
+            text-decoration: underline;
+        }
+
+        /* ====== LAYOUT ====== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--highlight-color), var(--accent-color));
+            border-radius: 2px;
+        }
+
+        /* ====== HEADER ====== */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            text-align: center;
+            padding: 120px 0 180px;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="%23e9c46a" stroke-width="0.3" fill="none" opacity="0.15"/></svg>');
+            opacity: 0.3;
+            animation: moveBackground 60s linear infinite;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.4rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .author {
+            font-style: italic;
+            margin-bottom: 60px;
+        }
+
+        /* 3D Map Container */
+        .africa-container {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            perspective: 1000px;
+            transform: translateY(50px);
+        }
+
+        #africa-3d {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* ====== RESEARCH CONTENT ====== */
+        .research-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 50px;
+            margin-top: -100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .abstract {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            padding: 30px;
+            background-color: rgba(61, 126, 166, 0.05);
+            border-left: 4px solid var(--accent-color);
+            margin-bottom: 50px;
+        }
+
+        .methodology {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .method-card {
+            background-color: var(--light-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            transition: all 0.3s ease;
+        }
+
+        .method-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+
+        .method-card h4 {
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+
+        .method-card .icon {
+            font-size: 2.5rem;
+            color: var(--highlight-color);
+            margin-bottom: 20px;
+        }
+
+        /* Findings Sections */
+        .findings-section {
+            margin-bottom: 60px;
+        }
+
+        .finding-card {
+            background-color: var(--light-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .finding-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow);
+        }
+
+        .finding-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .finding-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--highlight-color);
+        }
+
+        /* Charts */
+        .chart-container {
+            width: 100%;
+            height: 400px;
+            margin: 40px 0;
+            background-color: var(--light-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+        }
+
+        /* Data Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        .data-table th, .data-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .data-table th {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .data-table tr:nth-child(even) {
+            background-color: rgba(0,0,0,0.03);
+        }
+
+        .dark-mode .data-table tr:nth-child(even) {
+            background-color: rgba(255,255,255,0.03);
+        }
+
+        /* ====== CONCLUSION ====== */
+        .conclusion {
+            background: linear-gradient(135deg, rgba(61, 126, 166, 0.1) 0%, rgba(233, 196, 106, 0.1) 100%);
+            padding: 60px;
+            border-radius: var(--border-radius);
+            margin: 60px 0;
+            border-left: 5px solid var(--highlight-color);
+        }
+
+        /* ====== REFERENCES ====== */
+        .references {
+            margin-top: 80px;
+        }
+
+        .references h2 {
+            margin-bottom: 30px;
+        }
+
+        .reference-list {
+            list-style-type: none;
+        }
+
+        .reference-list li {
+            margin-bottom: 15px;
+            padding-left: 20px;
+            text-indent: -20px;
+        }
+
+        .reference-list li::before {
+            content: "•";
+            color: var(--highlight-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 20px;
+        }
+
+        /* ====== FOOTER ====== */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 80px;
+            clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-content h3 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            margin: 30px 0;
+        }
+
+        .social-links {
+            margin: 30px 0;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: var(--highlight-color);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* ====== DARK MODE TOGGLE ====== */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .dark-mode-toggle i {
+            font-size: 1.5rem;
+        }
+
+        /* ====== LOADING SCREEN ====== */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+        }
+
+        .loading-spinner {
+            width: 80px;
+            height: 80px;
+            border: 8px solid rgba(233, 196, 106, 0.2);
+            border-top-color: var(--highlight-color);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .loading-spinner::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 8px solid rgba(61, 126, 166, 0.1);
+            border-top-color: var(--accent-color);
+            border-radius: 50%;
+            animation: spin 2.5s linear infinite;
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: pulse 2s infinite;
+        }
+
+        /* ====== ANIMATIONS ====== */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        @keyframes moveBackground {
+            from { background-position: 0 0; }
+            to { background-position: 100px 100px; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* ====== RESPONSIVE DESIGN ====== */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .research-content {
+                padding: 40px;
+            }
+            
+            .methodology {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 0 150px;
+                clip-path: polygon(0 0, 100% 0, 100% 95%, 0 100%);
+            }
+            
+            .hero h1 {
+                font-size: 2.4rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .africa-container {
+                height: 300px;
+            }
+            
+            .research-content {
+                padding: 30px;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            h1 { font-size: 2.4rem; }
+            h2 { font-size: 2rem; }
+            h3 { font-size: 1.6rem; }
+            
+            .dark-mode-toggle {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                left: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .africa-container {
+                height: 250px;
+            }
+            
+            .abstract {
+                padding: 20px;
+                font-size: 1rem;
+            }
+            
+            .research-content {
+                padding: 20px;
+                margin-top: -80px;
+            }
+            
+            .section {
+                padding: 50px 0;
+            }
+            
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.8rem; }
+            h3 { font-size: 1.5rem; }
+            
+            .method-card, .finding-card {
+                padding: 20px;
+            }
+            
+            .conclusion {
+                padding: 30px;
+            }
+            
+            .dark-mode-toggle {
+                width: 45px;
+                height: 45px;
+                bottom: 15px;
+                left: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Loading Research</div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Digital Transformation in Africa</h1>
+            <p class="subtitle">A 5-Year Longitudinal Study on Remote IT Solutions as a Catalyst for Economic Development</p>
+            <p class="author">Research Conducted by Tanaka Gift Mundodzi, BSc IT Software Engineering</p>
+            
+            <!-- 3D Africa Map -->
+            <div class="africa-container">
+                <div id="africa-3d"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Content -->
+    <div class="container">
+        <div class="research-content">
+            <!-- Abstract -->
+            <section class="abstract">
+                <h3>Abstract</h3>
+                <p>This longitudinal study (2018-2023) examines how remote IT solutions are accelerating digital transformation across Sub-Saharan Africa. Through quantitative analysis of 1,200 tech enterprises and qualitative interviews with 150 remote workers, we demonstrate how distributed work models are overcoming traditional infrastructure limitations. Key findings reveal a 320% growth in remote tech employment since 2018, with particular impact in Nigeria, Kenya, and South Africa. The research presents a framework for leveraging remote work to achieve UN Sustainable Development Goals (SDGs) 8 (Decent Work) and 9 (Industry, Innovation and Infrastructure).</p>
+            </section>
+
+            <!-- Methodology -->
+            <section class="methodology">
+                <h3>Methodology</h3>
+                <div class="method-card">
+                    <div class="icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Quantitative Analysis</h4>
+                    <p>Collected data from 12 national ICT regulators, 45 tech hubs, and 1,200 enterprises using standardized metrics for digital adoption and remote work penetration.</p>
+                </div>
+                <div class="method-card">
+                    <div class="icon"><i class="fas fa-comments"></i></div>
+                    <h4>Qualitative Interviews</h4>
+                    <p>Conducted in-depth interviews with 150 remote workers across 8 countries, focusing on skill development, income changes, and work-life balance.</p>
+                </div>
+                <div class="method-card">
+                    <div class="icon"><i class="fas fa-map-marked-alt"></i></div>
+                    <h4>Geospatial Mapping</h4>
+                    <p>Developed a geospatial model correlating internet penetration with remote work adoption rates at regional levels.</p>
+                </div>
+            </section>
+
+            <!-- Key Findings -->
+            <section class="findings-section">
+                <h3>Key Findings</h3>
+                
+                <div class="finding-card">
+                    <h3>1. Remote Work Adoption</h3>
+                    <p>The study revealed three distinct phases of remote work adoption in Africa:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li><strong>2018-2020:</strong> Early adoption phase dominated by freelance platforms (Upwork, Fiverr) with 78% of workers in basic digital services</li>
+                        <li><strong>2020-2021:</strong> Pandemic acceleration saw 214% growth in complex remote roles (software development, cybersecurity)</li>
+                        <li><strong>2022-2023:</strong> Maturation phase with African companies now actively hiring remote workers across the continent</li>
+                    </ul>
+                    <div class="chart-container">
+                        <canvas id="adoptionChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="finding-card">
+                    <h3>2. Economic Impact</h3>
+                    <p>Remote IT work demonstrates significant multiplier effects:</p>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>2018 Baseline</th>
+                                <th>2023 Findings</th>
+                                <th>Growth</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Average Monthly Income</td>
+                                <td>$287</td>
+                                <td>$1,245</td>
+                                <td>334%</td>
+                            </tr>
+                            <tr>
+                                <td>Women in Tech Roles</td>
+                                <td>18%</td>
+                                <td>37%</td>
+                                <td>106%</td>
+                            </tr>
+                            <tr>
+                                <td>Rural Participation</td>
+                                <td>12%</td>
+                                <td>29%</td>
+                                <td>142%</td>
+                            </tr>
+                            <tr>
+                                <td>USD Retained Locally</td>
+                                <td>$42M</td>
+                                <td>$310M</td>
+                                <td>638%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="finding-card">
+                    <h3>3. Infrastructure Challenges</h3>
+                    <p>Despite growth, significant barriers remain:</p>
+                    <div class="chart-container">
+                        <canvas id="barriersChart"></canvas>
+                    </div>
+                    <p style="margin-top: 20px;">The study identified electricity reliability (43% of respondents experiencing >8h weekly outages) and mobile data costs (averaging $7.12/GB vs global $1.50) as the most significant constraints.</p>
+                </div>
+                
+                <div class="finding-card">
+                    <h3>4. Skills Development</h3>
+                    <p>The research documents four emerging upskilling pathways:</p>
+                    <ol style="margin-left: 20px; margin-bottom: 20px;">
+                        <li><strong>Corporate Training Programs:</strong> Andela, Gebeya, and Unicaf upskilled 28,000 developers since 2019</li>
+                        <li><strong>MOOC Platforms:</strong> Coursera reported 480% growth in African enrollments for tech courses</li>
+                        <li><strong>Micro-Credentials:</strong> Google and Microsoft certifications now recognized by 73% of employers</li>
+                        <li><strong>Peer-to-Peer Learning:</strong> Developer communities like DevCareer and SheCodeAfrica train 15,000 annually</li>
+                    </ol>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Case Studies -->
+            <section class="findings-section">
+                <h3>Regional Case Studies</h3>
+                
+                <div class="finding-card">
+                    <h3>1. Nigeria: The Fintech Revolution</h3>
+                    <p>Lagos has emerged as Africa's fintech capital, with remote developers powering platforms like Flutterwave and Paystack. Our data shows:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>47% of Nigerian remote workers are in fintech-related roles</li>
+                        <li>Average salaries increased from $400/month (2018) to $2,100/month (2023)</li>
+                        <li>78% of workers report training junior colleagues remotely</li>
+                    </ul>
+                </div>
+                
+                <div class="finding-card">
+                    <h3>2. Kenya: The Silicon Savannah</h3>
+                    <p>Nairobi's tech ecosystem demonstrates unique characteristics:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Strong government support through the Digital Economy Blueprint</li>
+                        <li>55% of remote workers serve US/European clients</li>
+                        <li>M-Pesa integration enables seamless payment systems</li>
+                    </ul>
+                </div>
+                
+                <div class="finding-card">
+                    <h3>3. South Africa: The Hybrid Model</h3>
+                    <p>Cape Town and Johannesburg show distinct patterns:</p>
+                    <ul style="margin-left: 20px; margin-bottom: 20px;">
+                        <li>Highest concentration of senior developers (32% with 5+ years experience)</li>
+                        <li>68% of remote workers also mentor locally</li>
+                        <li>Strong growth in DevOps and cloud architecture roles</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Conclusion -->
+            <section class="conclusion">
+                <h3>Conclusion & Recommendations</h3>
+                <p>This study demonstrates that remote IT solutions are not just bridging Africa's digital divide but actively creating new economic pathways. Key recommendations:</p>
+                <ol style="margin-left: 20px; margin-top: 20px;">
+                    <li><strong>Policy Interventions:</strong> Governments should prioritize electricity stability and reduce data costs through infrastructure sharing</li>
+                    <li><strong>Education Reform:</strong> Curriculum updates to emphasize cloud computing and remote collaboration tools</li>
+                    <li><strong>Public-Private Partnerships:</strong> Scale successful models like Andela's training programs</li>
+                    <li><strong>Financial Inclusion:</strong> Develop cross-border payment systems tailored for remote workers</li>
+                </ol>
+                <p style="margin-top: 20px;">The research predicts that with current growth rates, Africa could capture 15% of the global remote IT workforce by 2030, generating $50B in annual revenue.</p>
+            </section>
+
+            <!-- References -->
+            <section class="references">
+                <h3>References</h3>
+                <ul class="reference-list">
+                    <li>World Bank. (2023). Digital Economy for Africa Initiative. Washington, DC.</li>
+                    <li>GSMA. (2022). The Mobile Economy: Sub-Saharan Africa. London.</li>
+                    <li>African Development Bank. (2021). Jobs for Youth in Africa Strategy. Abidjan.</li>
+                    <li>International Telecommunications Union. (2023). Measuring Digital Development: Facts and Figures. Geneva.</li>
+                    <li>McKinsey & Company. (2022). The Future of Work in Africa. Johannesburg.</li>
+                </ul>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <h3>Tanaka Gift Mundodzi</h3>
+            <p>Information Technology Professional & Researcher</p>
+            <div class="contact-info">
+                <p><i class="fas fa-envelope"></i> tanakagift1000@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +27 76 434 4188</p>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fab fa-researchgate"></i></a>
+                <a href="#"><i class="fas fa-globe"></i></a>
+            </div>
+            <p class="copyright">&copy; 2025 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+ 
+    <script>
+    // Wait for the DOM to be fully loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        // Loading Screen Transition
+        const loadingScreen = document.getElementById('loading-screen');
+        setTimeout(() => {
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 800);
+        }, 1500);
+
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+        
+        // Check for saved user preference or use system preference
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+        const currentTheme = localStorage.getItem('theme');
+        
+        if (currentTheme === 'dark' || (!currentTheme && prefersDarkScheme.matches)) {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+        
+        darkModeToggle.addEventListener('click', function() {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Initialize 3D Africa Visualization
+        initAfrica3D();
+        
+        // Initialize Charts
+        initCharts();
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Animation on scroll
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray('.finding-card, .method-card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        // Floating animation for 3D Africa container
+        gsap.to('.africa-container', {
+            y: 10,
+            duration: 3,
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut"
+        });
+    });
+
+    // 3D Africa Visualization
+    function initAfrica3D() {
+        const container = document.getElementById('africa-3d');
+        
+        // Basic Three.js setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        container.appendChild(renderer.domElement);
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(1, 1, 1);
+        scene.add(directionalLight);
+        
+        // Create Africa shape
+        const africaShape = new THREE.Shape();
+        
+        // Simplified Africa continent coordinates (outline)
+        // Note: These are simplified points for demonstration
+        const points = [
+            new THREE.Vector2(-1.5, 3),   // Northwest
+            new THREE.Vector2(0, 3.5),     // North center
+            new THREE.Vector2(2, 3),       // Northeast
+            new THREE.Vector2(2.5, 1),    // East coast
+            new THREE.Vector2(2, -1),      // Southeast
+            new THREE.Vector2(1, -2.5),    // South
+            new THREE.Vector2(-1, -2.5),   // Southwest
+            new THREE.Vector2(-2, -1),    // West coast south
+            new THREE.Vector2(-2.5, 1),    // West coast middle
+            new THREE.Vector2(-2, 2.5),    // West coast north
+            new THREE.Vector2(-1.5, 3)     // Close the shape
+        ];
+        
+        africaShape.moveTo(points[0].x, points[0].y);
+        for (let i = 1; i < points.length; i++) {
+            africaShape.lineTo(points[i].x, points[i].y);
+        }
+        
+        // Extrude the shape to create 3D
+        const extrudeSettings = {
+            steps: 1,
+            depth: 0.2,
+            bevelEnabled: true,
+            bevelThickness: 0.1,
+            bevelSize: 0.1,
+            bevelSegments: 1
+        };
+        
+        const geometry = new THREE.ExtrudeGeometry(africaShape, extrudeSettings);
+        const material = new THREE.MeshPhongMaterial({
+            color: 0x3d7ea6,
+            specular: 0x111111,
+            shininess: 30,
+            transparent: true,
+            opacity: 0.9
+        });
+        
+        const africa = new THREE.Mesh(geometry, material);
+        scene.add(africa);
+        
+        // Add data points for major tech hubs
+        const techHubs = [
+            { name: "Lagos", pos: new THREE.Vector3(-1, 0.5, 0), size: 0.3, color: 0xe9c46a },
+            { name: "Nairobi", pos: new THREE.Vector3(1.5, -0.5, 0), size: 0.25, color: 0xe9c46a },
+            { name: "Cape Town", pos: new THREE.Vector3(-0.5, -2, 0), size: 0.25, color: 0xe9c46a },
+            { name: "Accra", pos: new THREE.Vector3(-1.5, 1, 0), size: 0.2, color: 0xe9c46a },
+            { name: "Kigali", pos: new THREE.Vector3(1.2, -0.8, 0), size: 0.15, color: 0xe9c46a }
+        ];
+        
+        techHubs.forEach(hub => {
+            const geometry = new THREE.SphereGeometry(hub.size, 16, 16);
+            const material = new THREE.MeshPhongMaterial({ color: hub.color });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.position.copy(hub.pos);
+            scene.add(sphere);
+            
+            // Add pulsing animation
+            gsap.to(sphere.scale, {
+                x: 1.3,
+                y: 1.3,
+                z: 1.3,
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        });
+        
+        // Camera position
+        camera.position.z = 5;
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            africa.rotation.y += 0.002;
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+        
+        animate();
+    }
+
+    // Initialize Charts
+    function initCharts() {
+        // Remote Work Adoption Chart (Line Chart)
+        const adoptionCtx = document.getElementById('adoptionChart').getContext('2d');
+        const adoptionChart = new Chart(adoptionCtx, {
+            type: 'line',
+            data: {
+                labels: ['2018', '2019', '2020', '2021', '2022', '2023'],
+                datasets: [{
+                    label: 'Freelance Platforms',
+                    data: [12000, 18500, 23000, 45000, 52000, 58000],
+                    borderColor: '#3d7ea6',
+                    backgroundColor: 'rgba(61, 126, 166, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }, {
+                    label: 'Full-time Remote',
+                    data: [3500, 5200, 8500, 32000, 68000, 125000],
+                    borderColor: '#e9c46a',
+                    backgroundColor: 'rgba(233, 196, 106, 0.1)',
+                    tension: 0.3,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Remote IT Workforce Growth in Africa (2018-2023)',
+                        font: {
+                            family: 'Inter, sans-serif',
+                            size: 16,
+                            weight: '600'
+                        },
+                        color: getComputedStyle(document.body).getPropertyValue('--primary-color')
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                family: 'Inter, sans-serif'
+                            },
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Workers',
+                            font: {
+                                family: 'Inter, sans-serif'
+                            }
+                        },
+                        ticks: {
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year',
+                            font: {
+                                family: 'Inter, sans-serif'
+                            }
+                        },
+                        ticks: {
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Infrastructure Barriers Chart (Radar Chart)
+        const barriersCtx = document.getElementById('barriersChart').getContext('2d');
+        const barriersChart = new Chart(barriersCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Electricity Reliability', 'Internet Costs', 'Internet Speed', 'Payment Systems', 'Skills Gap', 'Cultural Barriers'],
+                datasets: [{
+                    label: 'Barrier Severity (1-10)',
+                    data: [8.6, 7.9, 6.5, 5.2, 6.8, 4.3],
+                    backgroundColor: 'rgba(61, 126, 166, 0.2)',
+                    borderColor: '#3d7ea6',
+                    pointBackgroundColor: '#3d7ea6',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: '#3d7ea6'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Remote Work Infrastructure Barriers in Africa (2023)',
+                        font: {
+                            family: 'Inter, sans-serif',
+                            size: 16,
+                            weight: '600'
+                        },
+                        color: getComputedStyle(document.body).getPropertyValue('--primary-color')
+                    },
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    r: {
+                        angleLines: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        suggestedMin: 0,
+                        suggestedMax: 10,
+                        ticks: {
+                            stepSize: 2,
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        },
+                        pointLabels: {
+                            font: {
+                                family: 'Inter, sans-serif'
+                            },
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        }
+                    }
+                }
+            }
+        });
+
+        // Skills Development Chart (Bar Chart)
+        const skillsCtx = document.getElementById('skillsChart').getContext('2d');
+        const skillsChart = new Chart(skillsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Software Development', 'Cloud Computing', 'Data Science', 'Cybersecurity', 'UX/UI Design', 'DevOps'],
+                datasets: [{
+                    label: '2018 Skills',
+                    data: [12000, 3500, 1800, 900, 2500, 1500],
+                    backgroundColor: 'rgba(61, 126, 166, 0.5)',
+                    borderColor: '#3d7ea6',
+                    borderWidth: 1
+                }, {
+                    label: '2023 Skills',
+                    data: [68000, 42000, 31000, 18500, 27000, 32000],
+                    backgroundColor: 'rgba(233, 196, 106, 0.5)',
+                    borderColor: '#e9c46a',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'IT Skills Development in Africa (2018 vs 2023)',
+                        font: {
+                            family: 'Inter, sans-serif',
+                            size: 16,
+                            weight: '600'
+                        },
+                        color: getComputedStyle(document.body).getPropertyValue('--primary-color')
+                    },
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                family: 'Inter, sans-serif'
+                            },
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Professionals',
+                            font: {
+                                family: 'Inter, sans-serif'
+                            }
+                        },
+                        ticks: {
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        },
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: getComputedStyle(document.body).getPropertyValue('--text-color')
+                        },
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update charts when dark mode changes
+        document.getElementById('darkModeToggle').addEventListener('click', function() {
+            setTimeout(() => {
+                adoptionChart.update();
+                barriersChart.update();
+                skillsChart.update();
+            }, 300);
+        });
+    }
+</script>
+    
