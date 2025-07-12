@@ -749,6 +749,71 @@
     line-height: 1.7 !important;
   }
 }
+/* ===== Base Styles ===== */
+.bio-content {
+    width: 100%;
+    max-width: 1200px; /* Adjust based on your layout */
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.bio-text.card-3d {
+    background: #fff; /* Adjust color as needed */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional 3D effect */
+    margin: 10px 0;
+}
+
+.bio-text p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: #333; /* Adjust text color */
+}
+
+.section-title {
+    font-size: 24px;
+    margin: 20px 0 10px;
+    text-align: center;
+    color: #222; /* Adjust title color */
+}
+
+/* ===== Mobile Optimization ===== */
+@media (max-width: 768px) {
+    .bio-content {
+        padding: 0 10px; /* Tighter padding on mobile */
+    }
+
+    .bio-text.card-3d {
+        padding: 15px; /* Slightly less padding on mobile */
+        margin: 5px 0;
+    }
+
+    .bio-text p {
+        font-size: 15px; /* Slightly smaller for mobile */
+        line-height: 1.7; /* Better readability */
+        word-break: break-word; /* Prevent overflow */
+        hyphens: auto; /* Better word breaks */
+    }
+
+    .section-title {
+        font-size: 22px; /* Slightly smaller title */
+        margin: 15px 0 8px;
+    }
+}
+
+/* Extra small devices (phones, ≤ 480px) */
+@media (max-width: 480px) {
+    .bio-text p {
+        font-size: 14px; /* Optimal for small screens */
+    }
+
+    .section-title {
+        font-size: 20px;
+    }
+}
         /* === COLLABORATION BANNER === */
         .collab-banner {
             background: linear-gradient(135deg, var(--accent-color) 0%, var(--highlight-color) 100%);
