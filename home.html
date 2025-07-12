@@ -714,7 +714,41 @@
     width: 100% !important;
   }
 }
-        
+        /* ===== Mobile Responsive Fix ===== */
+@media (max-width: 768px) {
+  /* Fix container widths & prevent overflow */
+  .biography-container, 
+  .contact-container {
+    width: 100% !important;       /* Full width */
+    max-width: 100% !important;   /* Prevent stretching */
+    padding: 12px !important;     /* Better spacing */
+    margin: 0 auto !important;    /* Center if needed */
+    box-sizing: border-box !important; /* Include padding in width */
+  }
+
+  /* Fix text wrapping & readability */
+  .biography-text, 
+  .contact-info {
+    font-size: 15px !important;   /* Slightly larger for mobile */
+    line-height: 1.6 !important;  /* Better readability */
+    word-break: break-word !important; /* Force text to wrap */
+    hyphens: auto !important;     /* Better word breaks */
+    white-space: normal !important; /* Prevent unwanted line breaks */
+  }
+
+  /* Force containers to stay within screen */
+  body, html {
+    width: 100% !important;
+    overflow-x: hidden !important; /* No horizontal scroll */
+  }
+}
+@media (max-width: 480px) { /* Extra small devices */
+  .biography-text, 
+  .contact-info {
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+  }
+}
         /* === COLLABORATION BANNER === */
         .collab-banner {
             background: linear-gradient(135deg, var(--accent-color) 0%, var(--highlight-color) 100%);
